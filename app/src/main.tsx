@@ -17,13 +17,13 @@ createRoot(document.getElementById('root')!).render(
         <Flex className="nav-links" direction="column" gap="2">
           <Tabs.Root defaultValue="tab2" >
             <Tabs.List style={{ display: 'flex', gap: 12 }} justify={"center"}>
-              <Tabs.Trigger style={{ fontSize: '18px', padding: '8px 16px', cursor: 'pointer' }} value="tab1" >
+              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab1" >
                 Home
               </Tabs.Trigger>
-              <Tabs.Trigger style={{ fontSize: '18px', padding: '8px 16px', cursor: 'pointer' }} value="tab2" >
+              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab2" >
                 Trips
               </Tabs.Trigger>
-              <Tabs.Trigger style={{ fontSize: '18px', padding: '8px 16px', cursor: 'pointer' }} value="tab3" >
+              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab3" >
                 Destinations
               </Tabs.Trigger>
             </Tabs.List>
