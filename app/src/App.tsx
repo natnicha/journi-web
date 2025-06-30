@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import { Flex, Text, Button } from "@radix-ui/themes";
+import { Flex, Text, Button} from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
 
 function App() {
   const [count, setCount] = useState(0)
