@@ -112,6 +112,11 @@
   }
 }
 
+.map {
+  width: 50%;
+  height: 400px;
+}
+
 .card {
   padding: 2em;
 }
