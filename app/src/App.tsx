@@ -1,43 +1,43 @@
 import { useState } from 'react'
-import './App.css'
 import { Card, Avatar, Grid, Flex, Text,Box, Button} from "@radix-ui/themes";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import type { LatLngExpression } from 'leaflet';
+import NumberedDivIcon from './NumberedDivIcon';
+import './App.css'
 import "@radix-ui/themes/styles.css";
 import 'leaflet/dist/leaflet.css';
-import type { LatLngExpression } from 'leaflet';
-
-const center2: LatLngExpression = [13.754869105770162, 100.50415499999998]; 
-const center: LatLngExpression = [13.752178093933455, 100.50114226242297]; //Sao Chingcha
-const gradePalace: LatLngExpression = [13.750012107239836, 100.49151212225372]; //The Grand Palace
+import './LeafletNumberedMarkers.css'
 
 const zoom_default: number = 15
 function App() {
   const [count, setCount] = useState(0)
+  
+  const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
+  const plc2: LatLngExpression = [13.752178093933455, 100.50114226242297]; //Sao Chingcha
+  const plc3: LatLngExpression = [13.750012107239836, 100.49151212225372]; //The Grand Palace
+
+  const markers = [
+    { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​" },
+    { id: 2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า"},
+    { id: 3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง" },
+  ];
   return (
     <>
     <Flex direction="column" gap="3">
       <Grid columns="2" gap="3" rows="1" width="auto">
         <Box>
-          <MapContainer className="map" center={center} zoom={zoom_default} scrollWheelZoom={true}>
+          <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={center}>
-              <Popup>
-                Wat Ratchanatdaram Worawihan <br /> วัด​ราชนัดดารามวรวิหาร​
-              </Popup>
-            </Marker>
-            <Marker position={center2}>
-              <Popup>
-                Sao Chingcha (the Giant Swing) <br /> เสาชิงช้า
-              </Popup>
-            </Marker>
-            <Marker position={gradePalace}>
-              <Popup>
-                The Grand Palace <br /> พระบรมมหาราชวัง
-              </Popup>
-            </Marker>
+            {markers.map(({ id, position, title, detail }) => (
+              <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
+                <Popup>
+                  {title} <br/> {detail}
+                </Popup>
+              </Marker>
+            ))}
           </MapContainer>
         </Box>
         <Flex direction="column" gap="2">
