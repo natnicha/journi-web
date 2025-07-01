@@ -129,3 +129,12 @@
 .item-detail {
   text-align: left;
 }
+
+.pin-on-card {
+  position: relative;
+	color: #FFFFFF;
+	top: -42px;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+}

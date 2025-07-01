@@ -56,10 +56,15 @@ function App() {
             renderItem={(item) => (
               <SortableList.Item id={item.id}>
                 <Flex direction="row" gap="3">
-                  {item.id}
-                  <Avatar size="3" src={item.src} radius="full" fallback="J" />
+                  <div>
+                    <img src={"./src/assets/map-pin.png"}/>
+                    <div className="pin-on-card">
+                      {item.id}
+                    </div>
+                  </div>
+                  <Avatar size="3" src={item.src} radius="large" fallback="J" />
                   <Box>
-                    <Text as="div" size="2" weight="bold">
+                    <Text as="div" size="2" weight="bold" className="item-detail">
                       {item.title}
                     </Text>
                     <Text as="div" size="2" color="gray" className="item-detail">
