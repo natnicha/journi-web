@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   flex-grow: 1;
-  align-items: center;
   padding: 18px 20px;
   background-color: #fff;
   box-shadow: 0 0 0 calc(1px / var(--scale-x, 1)) rgba(63, 63, 68, 0.05),
