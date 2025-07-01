@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button} from "@radix-ui/themes";
+import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea} from "@radix-ui/themes";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
@@ -16,6 +16,7 @@ function App() {
   const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
   const plc2: LatLngExpression = [13.752178093933455, 100.50114226242297]; //Sao Chingcha
   const plc3: LatLngExpression = [13.750012107239836, 100.49151212225372]; //The Grand Palace
+  const plc4: LatLngExpression = [13.742037768953724, 100.50960937724595]; //China Town
 
   const markers = [
     { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
@@ -27,6 +28,11 @@ function App() {
     { id: 3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nojNwN-9BoahfZK7mGGJh2pazTiENSQH06r2MiOlIfcmHOjCRU2CePZ-uIeUcT1CX1Jo9WDBzOdlFrMXakp1w82BRCPOHCh0hbCoYZyzOEX5VdVD_k5op2vTc29gahLzcM2bcRcjA=w408-h272-k-no"
     },
+    { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
+      src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
+    },
+
+    
   ];
   const [items, setItems] = useState(markers);
 
@@ -49,34 +55,36 @@ function App() {
             ))}
           </MapContainer>
         </Box>
-        <Flex direction="column" gap="2">
-          <SortableList
-            items={items}
-            onChange={setItems}
-            renderItem={(item) => (
-              <SortableList.Item id={item.id}>
-                <Flex direction="row" gap="3">
-                  <div>
-                    <img src={"./src/assets/map-pin.png"}/>
-                    <div className="pin-on-card">
-                      {item.id}
+        <ScrollArea type="always" scrollbars="vertical" style={{ height: 400 }}>
+          <Flex direction="column" gap="2">
+            <SortableList
+              items={items}
+              onChange={setItems}
+              renderItem={(item) => (
+                <SortableList.Item id={item.id}>
+                  <Flex direction="row" gap="3">
+                    <div>
+                      <img src={"./src/assets/map-pin.png"}/>
+                      <div className="pin-on-card">
+                        {item.id}
+                      </div>
                     </div>
-                  </div>
-                  <Avatar size="3" src={item.src} radius="large" fallback="J" />
-                  <Box>
-                    <Text as="div" size="2" weight="bold" className="item-detail">
-                      {item.title}
-                    </Text>
-                    <Text as="div" size="2" color="gray" className="item-detail">
-                      {item.detail}
-                    </Text>
-                  </Box>
-                </Flex>
-                <SortableList.DragHandle />
-              </SortableList.Item>
-            )}
-          />
-        </Flex>
+                    <Avatar size="3" src={item.src} radius="large" fallback="J" />
+                    <Box>
+                      <Text as="div" size="2" weight="bold" className="item-detail">
+                        {item.title}
+                      </Text>
+                      <Text as="div" size="2" color="gray" className="item-detail">
+                        {item.detail}
+                      </Text>
+                    </Box>
+                  </Flex>
+                  <SortableList.DragHandle />
+                </SortableList.Item>
+              )}
+            />
+          </Flex>
+        </ScrollArea>
       </Grid>
       <Flex direction="column" gap="2">
         <Button>Plan it!</Button>
