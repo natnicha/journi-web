@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Flex, Container, TabNav, Theme} from "@radix-ui/themes";
-import "@radix-ui/themes/styles.css";
 import { Menu } from "lucide-react";
+import "@radix-ui/themes/styles.css";
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
