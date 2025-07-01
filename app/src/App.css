@@ -69,6 +69,7 @@
   justify-content: space-between; /* space between left-mid-right */
   padding: 1rem;
   background-color: #fefefe;
+  font: 10px;
 }
 
 .nav-links {
@@ -82,7 +83,7 @@
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  font: 5px;
+  font-size: 15px;
 }
 
 .tabtrigger {

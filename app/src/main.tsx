@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Flex, Container, Tabs, Theme} from "@radix-ui/themes";
+import { Flex, Container, TabNav, Theme} from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { Menu } from "lucide-react";
 import App from './App.tsx'
@@ -15,23 +15,11 @@ createRoot(document.getElementById('root')!).render(
         </div>
 
         <Flex className="nav-links" direction="column" gap="2">
-          <Tabs.Root defaultValue="tab2" >
-            <Tabs.List style={{ display: 'flex', gap: 12 }} justify={"center"}>
-              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab1" >
-                Home
-              </Tabs.Trigger>
-              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab2" >
-                Trips
-              </Tabs.Trigger>
-              <Tabs.Trigger style={{ fontSize: '14px', padding: '5px 5px', cursor: 'pointer' }} value="tab3" >
-                Destinations
-              </Tabs.Trigger>
-            </Tabs.List>
-
-            <Tabs.Content value="tab1"></Tabs.Content>
-            <Tabs.Content value="tab2"></Tabs.Content>
-            <Tabs.Content value="tab3"></Tabs.Content>
-          </Tabs.Root>
+          <TabNav.Root justify={'center'} size="2">
+            <TabNav.Link className="text-gray-800 cursor-pointer" href="<App>">Home</TabNav.Link>
+            <TabNav.Link href="<App>" active>Trips</TabNav.Link>
+            <TabNav.Link href="<App>">Destinations</TabNav.Link>
+          </TabNav.Root>
         </Flex>
 
         <div className="account">
