@@ -109,7 +109,7 @@ function App() {
               </Marker>
             ))}
           </MapContainer>
-          <ScrollArea type="hover" scrollbars="both" style = {{height: '68.5vh'}}>
+          <ScrollArea type="hover" scrollbars="both" style = {{height: '70vh'}}>
           <Flex direction="column" gap="2">
             <SortableList
               items={items}

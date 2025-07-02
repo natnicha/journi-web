@@ -5,7 +5,9 @@
   text-align: center;
   height: '100vh',
 }
-
+body {
+  overflow: hidden;
+}
 :root {
   --color-tropical-mango-cream: #FFE5B4;
   --color-tropical-lagoon-mist: #B2EBF2;
