@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea } from "@radix-ui/themes";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
@@ -11,43 +11,15 @@ import './LeafletNumberedMarkers.css'
 
 const zoom_default: number = 15
 
-type LocationInfo = {
-  lat: number;
-  lng: number;
+type PlaceInfo = {
+  id: number;
+  position: LatLngExpression;
+  title: string;
+  detail: string;
+  src: string;
   address?: string;
-  type?: string;
+  type?: string[];
 };
-
-function ReverseGeocodeMarker({ onLocationUpdate }: { onLocationUpdate: (location: LocationInfo) => void }) {
-  useMapEvents({
-    click: async (e) => {
-      const { lat, lng } = e.latlng;
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{
-            // headers: {
-              // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
-              // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-              // "Content-Type": "text/plain",
-              // "Access-Control-Allow-Origin" : "http://localhost:3000",
-            // },
-          }
-        );
-        const data = await res.json();
-        onLocationUpdate({
-          lat: 1,
-          lng: 2,
-          address: data.display_name,
-          type: data.type,
-        });
-      } catch (error) {
-        console.error('Reverse geocoding failed:', error);
-      }
-    },
-  });
-
-  return null;
-}
 
 function App() {
   const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
@@ -58,19 +30,59 @@ function App() {
   const markers = [
     { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no"
+      , address: ""
+      , types: []
     },
     { id: 2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4np6sSA4saMvYxbBlbZ0yvJC44Da6hz8DTkc44iGX8i8n1_XLQ_XVISvbJGLi_ayhY8k0gIX26qIl9M-__wTX_f5fohMH5DngaiQL9XTnWnIdwdi380JwPWJQ5nJ180F-mwoPvBxAw=w408-h725-k-no"
+      , address: ""
+      , types: []
     },
     { id: 3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nojNwN-9BoahfZK7mGGJh2pazTiENSQH06r2MiOlIfcmHOjCRU2CePZ-uIeUcT1CX1Jo9WDBzOdlFrMXakp1w82BRCPOHCh0hbCoYZyzOEX5VdVD_k5op2vTc29gahLzcM2bcRcjA=w408-h272-k-no"
+      , address: ""
+      , types: []
     },
     { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
+      , address: ""
+      , types: []
     },
   ];
   const [items, setItems] = useState(markers);
-  const [location, setLocation] = useState<LocationInfo | null>(null);
+  
+  useEffect(() => {
+    const fetchAllLocations = async () => {
+      const updatedItems = await Promise.all(
+        items.map(async (item) => {
+          const [lat, lon] = item.position.toString().split(',');
+          try {
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+              {
+                headers: {
+                  'User-Agent': 'Journi/1.0',
+                },
+              }
+            );
+            const data = await res.json();
+            return {
+              ...item,
+              address: data.display_name as string,
+              types: [...item.types, data.type] as  never[],
+            };
+          } catch (err) {
+            console.error('Error fetching location:', err);
+            return item; 
+          }
+        })
+      );
+      console.log(updatedItems)
+      setItems(updatedItems);
+    };
+
+    fetchAllLocations();
+  }, []);
 
   return (
     <>
@@ -82,14 +94,11 @@ function App() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <ReverseGeocodeMarker onLocationUpdate={setLocation} />
             {markers.map(({ id, position, title, detail }) => (
               <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
-                { location && (<Popup>
+                <Popup> 
                   {title} <br/> {detail} <br/>
-                  <strong>Address:</strong> <br />
-                   {location.address ? location.address : 'Loading...'}
-                </Popup>)}
+                </Popup> 
               </Marker>
             ))}
           </MapContainer>
@@ -116,12 +125,11 @@ function App() {
                       <Text as="div" size="2" color="gray" className="item-detail">
                         {item.detail}
                       </Text>
-                      { location && (
                       <Text as="div" size="2" color="gray" className="item-detail">
-                        <strong>Address:</strong> <br />
-                        {location.address ? location.address : 'Loading...'}
+                        <strong>Type:</strong> <br />
+                        {item.types} <br />
+                        {item.address}
                       </Text> 
-                      )}
                     </Box>
                   </Flex>
                   <SortableList.DragHandle />
@@ -131,7 +139,6 @@ function App() {
           </Flex>
         </ScrollArea>
       </Grid>
-      {location && <p>Place type: {location.type ? location.type : 'Loading...'}</p>}
       <Flex direction="column" gap="2">
         <Button>Plan it!</Button>
       </Flex>
