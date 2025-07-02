@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea } from "@radix-ui/themes";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea, Badge } from "@radix-ui/themes";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from "./components";
@@ -20,6 +20,14 @@ type PlaceInfo = {
   address?: string;
   type?: string[];
 };
+
+function getBadgeClassName(content: string) {
+  if (content === 'attraction') return 'badge-attraction';
+  if (content === 'pedestrian') return 'badge-pedestrian';
+  if (content === 'castle') return 'badge-castle';
+  if (content === 'place of worship') return 'badge-place-of-worship';
+  return 'gray'; // default
+}
 
 function App() {
   const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
@@ -126,8 +134,12 @@ function App() {
                         {item.detail}
                       </Text>
                       <Text as="div" size="2" color="gray" className="item-detail">
-                        <strong>Type:</strong> <br />
-                        {item.types} <br />
+                        <Flex gap="2">
+                          <Badge className={getBadgeClassName(item.types.toString().replaceAll("_", " "))}>
+                            {item.types.toString().replaceAll("_", " ")}
+                          </Badge>
+                        </Flex>
+                         <br />
                         {item.address}
                       </Text> 
                     </Box>

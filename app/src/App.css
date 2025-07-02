@@ -130,6 +130,28 @@
   text-align: left;
 }
 
+
+.badge-attraction {
+  color:  var(--color-tropical-mango-toasted);
+  background-color: var(--color-tropical-mango-tin);
+}
+
+.badge-pedestrian {
+  color:  var(--color-tropical-lagoon-tidewater-Blue);
+  background-color: var(--color-tropical-lagoon-whisper);
+}
+
+.badge-castle {
+  color:  var(--color-tropical-palm-sea-forest);
+  background-color: var(--color-tropical-palm-misty-palm);
+}
+
+.badge-place-of-worship{
+  color:  var(--color-tropical-sunset-rose-guava);
+  background-color: var(--color-tropical-sunset-sorbet-Mist);
+}
+
+
 .pin-on-card {
   position: relative;
 	color: #FFFFFF;
