@@ -149,7 +149,7 @@ function App() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ReverseGeocodeMarker addNewPlace={addNewPlace} />
-            {markers.map(({ id, position, title, detail }) => (
+            {items.map(({ id, position, title, detail }) => (
               <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
                 <Popup> 
                   {title} <br/> {detail} <br/>
