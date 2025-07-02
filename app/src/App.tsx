@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea, Badge } from "@radix-ui/themes";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import type { LatLngExpression } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import type { LatLngExpression, LatLngTuple } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from "./components";
 import './App.css'
@@ -18,7 +18,7 @@ type PlaceInfo = {
   detail: string;
   src: string;
   address?: string;
-  type?: string[];
+  types?: string[];
 };
 
 function getBadgeClassName(content: string) {
@@ -28,6 +28,30 @@ function getBadgeClassName(content: string) {
   if ((content.length)%6 == 4) return 'badge-sunset';
   if ((content.length)%6 == 5) return 'badge-orchid';
   return 'gray'; // default
+}
+
+function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceInfo) => void }) {
+  useMapEvents({
+    click: async (e) => {
+      const { lat, lng } = e.latlng;
+      try {
+        const plc: LatLngExpression = [lat, lng];
+        var place = {
+          id: 0,
+          position: plc,
+          title: "xxx",
+          detail: "xxxx",
+          src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no",
+          types: ["temple"] as never[],
+        }
+        addNewPlace(place)
+      } catch (error) {
+        console.error('Reverse geocoding failed:', error);
+      }
+    },
+  });
+
+  return null;
 }
 
 function App() {
@@ -78,6 +102,11 @@ function App() {
   ];
   const [items, setItems] = useState(markers);
   
+  const addNewPlace = (plc: any) => {
+    plc.id = items.length+1
+    setItems((prev) => [...prev, plc]); 
+  };
+
   useEffect(() => {
     const fetchAllLocations = async () => {
       const updatedItems = await Promise.all(
@@ -119,6 +148,7 @@ function App() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            <ReverseGeocodeMarker addNewPlace={addNewPlace} />
             {markers.map(({ id, position, title, detail }) => (
               <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
                 <Popup> 
