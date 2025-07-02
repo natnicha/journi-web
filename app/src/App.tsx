@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea} from "@radix-ui/themes";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea } from "@radix-ui/themes";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from "./components";
@@ -9,8 +9,45 @@ import "@radix-ui/themes/styles.css";
 import 'leaflet/dist/leaflet.css';
 import './LeafletNumberedMarkers.css'
 
-
 const zoom_default: number = 15
+
+type LocationInfo = {
+  lat: number;
+  lng: number;
+  address?: string;
+  type?: string;
+};
+
+function ReverseGeocodeMarker({ onLocationUpdate }: { onLocationUpdate: (location: LocationInfo) => void }) {
+  useMapEvents({
+    click: async (e) => {
+      const { lat, lng } = e.latlng;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{
+            // headers: {
+              // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+              // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+              // "Content-Type": "text/plain",
+              // "Access-Control-Allow-Origin" : "http://localhost:3000",
+            // },
+          }
+        );
+        const data = await res.json();
+        onLocationUpdate({
+          lat: 1,
+          lng: 2,
+          address: data.display_name,
+          type: data.type,
+        });
+      } catch (error) {
+        console.error('Reverse geocoding failed:', error);
+      }
+    },
+  });
+
+  return null;
+}
 
 function App() {
   const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
@@ -31,10 +68,9 @@ function App() {
     { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
     },
-
-    
   ];
   const [items, setItems] = useState(markers);
+  const [location, setLocation] = useState<LocationInfo | null>(null);
 
   return (
     <>
@@ -46,11 +82,14 @@ function App() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            <ReverseGeocodeMarker onLocationUpdate={setLocation} />
             {markers.map(({ id, position, title, detail }) => (
               <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
-                <Popup>
-                  {title} <br/> {detail}
-                </Popup>
+                { location && (<Popup>
+                  {title} <br/> {detail} <br/>
+                  <strong>Address:</strong> <br />
+                   {location.address ? location.address : 'Loading...'}
+                </Popup>)}
               </Marker>
             ))}
           </MapContainer>
@@ -77,6 +116,12 @@ function App() {
                       <Text as="div" size="2" color="gray" className="item-detail">
                         {item.detail}
                       </Text>
+                      { location && (
+                      <Text as="div" size="2" color="gray" className="item-detail">
+                        <strong>Address:</strong> <br />
+                        {location.address ? location.address : 'Loading...'}
+                      </Text> 
+                      )}
                     </Box>
                   </Flex>
                   <SortableList.DragHandle />
@@ -86,6 +131,7 @@ function App() {
           </Flex>
         </ScrollArea>
       </Grid>
+      {location && <p>Place type: {location.type ? location.type : 'Loading...'}</p>}
       <Flex direction="column" gap="2">
         <Button>Plan it!</Button>
       </Flex>
