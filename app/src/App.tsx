@@ -22,10 +22,11 @@ type PlaceInfo = {
 };
 
 function getBadgeClassName(content: string) {
-  if (content === 'attraction') return 'badge-attraction';
-  if (content === 'pedestrian') return 'badge-pedestrian';
-  if (content === 'castle') return 'badge-castle';
-  if (content === 'place of worship') return 'badge-place-of-worship';
+  if ((content.length)%6 == 0) return 'badge-mango';
+  if ((content.length)%6 == 1) return 'badge-lagoon';
+  if ((content.length)%6 == 3) return 'badge-palm';
+  if ((content.length)%6 == 4) return 'badge-sunset';
+  if ((content.length)%6 == 5) return 'badge-orchid';
   return 'gray'; // default
 }
 
@@ -34,6 +35,9 @@ function App() {
   const plc2: LatLngExpression = [13.752178093933455, 100.50114226242297]; //Sao Chingcha
   const plc3: LatLngExpression = [13.750012107239836, 100.49151212225372]; //The Grand Palace
   const plc4: LatLngExpression = [13.742037768953724, 100.50960937724595]; //China Town
+  const plc5: LatLngExpression = [13.725474885078526, 100.5338972116344]; //Restaurant
+  const plc6: LatLngExpression = [13.733148327431199, 100.5271507885528]; //Hotel
+  const plc7: LatLngExpression = [13.735912709116183, 100.52462681828554]; //Cafe
 
   const markers = [
     { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
@@ -53,6 +57,21 @@ function App() {
     },
     { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
+      , address: ""
+      , types: []
+    },
+    { id: 5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
+      src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr0wwWWc8ZaFMwX6ol5XZmGjeS179fZldbEsY-G18DwHQB5bCG_b-sdlk41HViEk9ZdTu_HHQkxYjURMCROPBNp8gKPyTpusxmaqdfVGyhACAMR99967uuMq9RDztMt9gvHk3XRaw=w408-h306-k-no"
+      , address: ""
+      , types: []
+    },
+    { id: 6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
+      src: "https://lh3.googleusercontent.com/p/AF1QipO47M8DCVLRu67siHMq6UHgX7DixyMI_iAIr4fE=w408-h279-k-no"
+      , address: ""
+      , types: []
+    },
+    { id: 7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
+      src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
       , address: ""
       , types: []
     },
@@ -85,7 +104,6 @@ function App() {
           }
         })
       );
-      console.log(updatedItems)
       setItems(updatedItems);
     };
 

@@ -13,6 +13,7 @@ body {
   --color-tropical-lagoon-mist: #B2EBF2;
   --color-tropical-palm-leaf: #B8E0D2;
   --color-tropical-sunset-sorbet: #FFB7C3;
+  --color-tropical-orchid-lavender-mist: #E3D5F5;
   --color-tropical-coconut-milk: #FDF6F0;
 
   --color-tropical-mango-tin: #FFF1DB;
@@ -39,12 +40,24 @@ body {
   --color-tropical-sunset-rose-guava: #F76C8A;
   --color-tropical-sunset-tropical-hibiscus: #D74D6A;
 
+  --color-tropical-orchid-whisper: #F4EBFA;   
+  --color-tropical-orchid-lavender: #E3D5F5;
+  --color-tropical-orchid-soft-bougainvillea: #C8AEEA;
+  --color-tropical-orchid-flower-blush: #A87ED8;
+  --color-tropical-orchid-vibrant-violet: #845EC2; 
 
   --color-tropical-coconut-white-sand: #FFFFFF;
   --color-tropical-coconut-coconut-milk: #FDF6F0;
   --color-tropical-coconut-cream-drop: #F5ECE3;
   --color-tropical-coconut-beach-foam: #EBDFD2;
   --color-tropical-coconut-warm-shell: #DCCCB8;
+
+  --color-tropical-orchid-whisper: #F4EBFA;
+  --color-tropical-orchid-lavender-mist: #E3D5F5;
+  --color-tropical-orchid-soft-bougainvillea: #C8AEEA;
+  --color-tropical-orchid-flower-blush: #A87ED8;
+  --color-tropical-orchid-vibrant-violet: #845EC2;
+
 }
 
 
@@ -132,26 +145,30 @@ body {
 }
 
 
-.badge-attraction {
+.badge-mango {
   color:  var(--color-tropical-mango-toasted);
   background-color: var(--color-tropical-mango-tin);
 }
 
-.badge-pedestrian {
+.badge-lagoon {
   color:  var(--color-tropical-lagoon-tidewater-Blue);
   background-color: var(--color-tropical-lagoon-whisper);
 }
 
-.badge-castle {
+.badge-palm {
   color:  var(--color-tropical-palm-sea-forest);
   background-color: var(--color-tropical-palm-misty-palm);
 }
 
-.badge-place-of-worship{
+.badge-sunset {
   color:  var(--color-tropical-sunset-rose-guava);
   background-color: var(--color-tropical-sunset-sorbet-Mist);
 }
 
+.badge-orchid {
+  color:  var(--color-tropical-orchid-vibrant-violet);
+  background-color: var(--color-tropical-orchid-whisper);
+}
 
 .pin-on-card {
   position: relative;
