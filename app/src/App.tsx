@@ -96,7 +96,6 @@ function App() {
     <>
     <Flex direction="column" gap="3">
       <Grid columns="2" gap="3" rows="1" width="auto">
-        <Box>
           <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -110,8 +109,7 @@ function App() {
               </Marker>
             ))}
           </MapContainer>
-        </Box>
-        <ScrollArea type="always" scrollbars="vertical" style={{ height: 400 }}>
+          <ScrollArea type="hover" scrollbars="both" style = {{height: '100vh'}}>
           <Flex direction="column" gap="2">
             <SortableList
               items={items}
