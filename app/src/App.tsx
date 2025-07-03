@@ -41,8 +41,8 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
         var place = {
           id: 0,
           position: plc,
-          title: "xxx",
-          detail: "xxxx",
+          title: "",
+          detail: "",
           src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no",
         }
         addNewPlace(place)
@@ -89,10 +89,12 @@ function App() {
   ];
   const [items, setItems] = useState<PlaceInfo[]>(markers);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   
   const addNewPlace = (plc: any) => {
     plc.id = items.length+1
     setItems((prev) => [...prev, plc]); 
+    setIsAddNewItem(true);
   };
 
   // Auto-scroll to bottom when items change
@@ -139,7 +141,8 @@ function App() {
     };
 
     fetchAllLocations();
-  }, []);
+    setIsAddNewItem(false);
+  }, [isAddNewItem]);
   
   return (
     <>
@@ -175,6 +178,32 @@ function App() {
                       </div>
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
+                    
+                    {item.title === "" ? (
+                    <Box className="item-content">
+                      <Text as="div" size="2" className="item-title">
+                        <Skeleton  className="item-title">
+                          Lorem ipsum dolor sit amet,<br/>
+                        </Skeleton>
+                      </Text>
+
+                      <Text as="div" size="2" className="item-detail">
+                        <Skeleton>
+                          consectetur adipiscing elit.<br/>
+                        </Skeleton>
+                      </Text>
+
+                      <Text as="div" size="1" className="item-address">
+                        <Skeleton className="item-address">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis 
+                          erat, fringilla sed commodo sed, aliquet nec magna.
+                        </Skeleton>
+                        </Text>
+                      <Skeleton>
+                        <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
+                      </Skeleton>
+                    </Box>
+                    ) : (
                     <Box className="item-content">
                       <Text as="div" className="item-title">
                         {item.title}
@@ -189,17 +218,12 @@ function App() {
                             </Badge>
                           ))}
                         </Flex>
-                        {item.address ? (
-                          <Text as="div" size="1" className="item-address">
-                            {item.address}
-                          </Text>
-                          ) : ( <Skeleton className="item-address">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis 
-                            erat, fringilla sed commodo sed, aliquet nec magna.
-                          </Skeleton>)
-                        }
+                        <Text as="div" size="1" className="item-address">
+                          {item.address}
+                        </Text>                        
                       <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
                     </Box>
+                    )}
                   </Flex>
                   <SortableList.DragHandle />
                 </SortableList.Item>

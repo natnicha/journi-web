@@ -125,6 +125,10 @@ body {
   width: 100%;
 }
 
+.item-skeleton {
+  text-align: left;
+}
+
 .item-content{
 	min-width: 50vh;
   flex-direction: column;
