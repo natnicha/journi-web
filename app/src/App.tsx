@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, ScrollArea, Badge } from "@radix-ui/themes";
+import { useEffect, useRef, useState } from 'react'
+import { Avatar, Grid, Flex, Text,Box, Button, Badge } from "@radix-ui/themes";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
-import type { LatLngExpression, LatLngTuple } from 'leaflet';
+import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from "./components";
-import './App.css'
+import { ScrollArea } from "radix-ui";
 import "@radix-ui/themes/styles.css";
 import 'leaflet/dist/leaflet.css';
+import './App.css'
+import "./styles.css";
 import './LeafletNumberedMarkers.css'
 
 const zoom_default: number = 15
@@ -101,11 +103,19 @@ function App() {
     },
   ];
   const [items, setItems] = useState(markers);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   
   const addNewPlace = (plc: any) => {
     plc.id = items.length+1
     setItems((prev) => [...prev, plc]); 
   };
+
+  // Auto-scroll to bottom when items change
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [items]);
 
   useEffect(() => {
     const fetchAllLocations = async () => {
@@ -138,7 +148,7 @@ function App() {
 
     fetchAllLocations();
   }, []);
-
+  
   return (
     <>
     <Flex direction="column" gap="3">
@@ -157,7 +167,8 @@ function App() {
               </Marker>
             ))}
           </MapContainer>
-          <ScrollArea type="hover" scrollbars="both" style = {{height: '70vh'}}>
+          <ScrollArea.Root className="ScrollAreaRoot">
+		      <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
           <Flex direction="column" gap="2">
             <SortableList
               items={items}
@@ -195,7 +206,14 @@ function App() {
               )}
             />
           </Flex>
-        </ScrollArea>
+        </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical" >
+          <ScrollArea.Thumb className="ScrollAreaThumb" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal" >
+          <ScrollArea.Thumb className="ScrollAreaThumb" />
+        </ScrollArea.Scrollbar>
+      </ScrollArea.Root>
       </Grid>
       <Flex direction="column" gap="2">
         <Button>Plan it!</Button>
