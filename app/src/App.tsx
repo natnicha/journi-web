@@ -44,7 +44,6 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
           title: "xxx",
           detail: "xxxx",
           src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no",
-          tags: ["temple"],
         }
         addNewPlace(place)
       } catch (error) {
@@ -109,19 +108,26 @@ function App() {
         items.map(async (item) => {
           const [lat, lon] = item.position.toString().split(',');
           try {
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-              {
-                headers: {
-                  'User-Agent': 'Journi/1.0',
-                },
-              }
+            const userAgent = { 'User-Agent': 'Journi/1.0',  };
+            const acceptLangAll = { 'Accept-Language': '*' };
+            const acceptLangEn = { 'Accept-Language': 'en' };
+            const resEn = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, 
+              { headers: {...acceptLangEn, ...userAgent} },
             );
-            const data = await res.json();
+            const data = await resEn.json();
+            
+            const resLocal = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+              { headers: {...acceptLangAll, ...userAgent} },
+            );
+            const dataLocal = await resLocal.json();
             return {
               ...item,
+              title: (data.name ? data.name : "Untitled") as string,
+              detail: (dataLocal.name === "" ? data.name : dataLocal.name) as string,
               address: data.display_name as string,
-              tags: [data.type, data.class] as  never[],
+              tags: [data.type, data.class] as never[],
             };
           } catch (err) {
             console.error('Error fetching location:', err);
@@ -169,17 +175,16 @@ function App() {
                       </div>
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
-                    <Box   className="item-content">
+                    <Box className="item-content">
                       <Text as="div" className="item-title">
                         {item.title}
                       </Text>
                       <Text as="div" className="item-detail">
                         {item.detail}
                       </Text>
-                      <Text as="div" size="2" color="gray" className="item-detail">
                         <Flex gap="2">
                           {(item.tags ?? []).map(( tag ) => (
-                            <Badge className={getBadgeClassName(tag.replaceAll("_", " "))}>
+                            <Badge className={getBadgeClassName(tag.replaceAll("_", " ") )} key={tag}>
                               {tag.replaceAll("_", " ")}
                             </Badge>
                           ))}
@@ -193,7 +198,6 @@ function App() {
                             erat, fringilla sed commodo sed, aliquet nec magna.
                           </Skeleton>)
                         }
-                      </Text> 
                       <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
                     </Box>
                   </Flex>
