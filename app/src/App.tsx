@@ -170,10 +170,10 @@ function App() {
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
                     <Box>
-                      <Text as="div" size="2" weight="bold" className="item-detail">
+                      <Text as="div" className="item-title">
                         {item.title}
                       </Text>
-                      <Text as="div" size="2" color="gray" className="item-detail">
+                      <Text as="div" className="item-detail">
                         {item.detail}
                       </Text>
                       <Text as="div" size="2" color="gray" className="item-detail">
@@ -184,8 +184,9 @@ function App() {
                             </Badge>
                           ))}
                         </Flex>
-                         <br />
-                        {item.address}
+                        <Text as="div" size="1" className="item-address">
+                          {item.address}
+                        </Text>
                       </Text> 
                     </Box>
                   </Flex>

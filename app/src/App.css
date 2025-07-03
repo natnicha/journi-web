@@ -125,8 +125,25 @@ body {
   width: 100%;
 }
 
+.item-title {
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
 .item-detail {
   text-align: left;
+  font-size: 13px;
+  color: #333;
+}
+
+
+.item-address {
+  text-align: left;
+  font-style: italic;
+  color: #6b6b6b;
+  margin-top: 0.7rem;
 }
 
 
