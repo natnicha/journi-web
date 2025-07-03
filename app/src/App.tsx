@@ -24,11 +24,11 @@ type PlaceInfo = {
 };
 
 function getBadgeClassName(content: string) {
-  if ((content.length)%6 == 0) return 'badge-mango';
-  if ((content.length)%6 == 1) return 'badge-lagoon';
-  if ((content.length)%6 == 3) return 'badge-palm';
-  if ((content.length)%6 == 4) return 'badge-sunset';
-  if ((content.length)%6 == 5) return 'badge-orchid';
+  if ((content.length)%5 == 0) return 'badge-mango';
+  if ((content.length)%5 == 1) return 'badge-lagoon';
+  if ((content.length)%5 == 2) return 'badge-palm';
+  if ((content.length)%5 == 3) return 'badge-sunset';
+  if ((content.length)%5 == 4) return 'badge-orchid';
   return 'gray'; // default
 }
 
@@ -44,7 +44,7 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
           title: "xxx",
           detail: "xxxx",
           src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no",
-          types: ["temple"] as never[],
+          types: ["temple"],
         }
         addNewPlace(place)
       } catch (error) {
@@ -57,52 +57,38 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
 }
 
 function App() {
-  const plc1: LatLngExpression = [13.754869105770162, 100.50415499999998]; //วัด​ราชนัดดา
-  const plc2: LatLngExpression = [13.752178093933455, 100.50114226242297]; //Sao Chingcha
+  const plc1: LatLngExpression = [13.754817011352124, 100.50415849532308]; //วัด​ราชนัดดา
+  const plc2: LatLngExpression = [13.7517728082884, 100.50127363590416]; //Sao Chingcha
   const plc3: LatLngExpression = [13.750012107239836, 100.49151212225372]; //The Grand Palace
   const plc4: LatLngExpression = [13.742037768953724, 100.50960937724595]; //China Town
   const plc5: LatLngExpression = [13.725474885078526, 100.5338972116344]; //Restaurant
   const plc6: LatLngExpression = [13.733148327431199, 100.5271507885528]; //Hotel
   const plc7: LatLngExpression = [13.735912709116183, 100.52462681828554]; //Cafe
 
-  const markers = [
+  const markers: PlaceInfo[] = [
     { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no"
-      , address: ""
-      , types: []
     },
     { id: 2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4np6sSA4saMvYxbBlbZ0yvJC44Da6hz8DTkc44iGX8i8n1_XLQ_XVISvbJGLi_ayhY8k0gIX26qIl9M-__wTX_f5fohMH5DngaiQL9XTnWnIdwdi380JwPWJQ5nJ180F-mwoPvBxAw=w408-h725-k-no"
-      , address: ""
-      , types: []
     },
     { id: 3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nojNwN-9BoahfZK7mGGJh2pazTiENSQH06r2MiOlIfcmHOjCRU2CePZ-uIeUcT1CX1Jo9WDBzOdlFrMXakp1w82BRCPOHCh0hbCoYZyzOEX5VdVD_k5op2vTc29gahLzcM2bcRcjA=w408-h272-k-no"
-      , address: ""
-      , types: []
     },
     { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
-      , address: ""
-      , types: []
     },
     { id: 5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr0wwWWc8ZaFMwX6ol5XZmGjeS179fZldbEsY-G18DwHQB5bCG_b-sdlk41HViEk9ZdTu_HHQkxYjURMCROPBNp8gKPyTpusxmaqdfVGyhACAMR99967uuMq9RDztMt9gvHk3XRaw=w408-h306-k-no"
-      , address: ""
-      , types: []
     },
     { id: 6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
       src: "https://lh3.googleusercontent.com/p/AF1QipO47M8DCVLRu67siHMq6UHgX7DixyMI_iAIr4fE=w408-h279-k-no"
-      , address: ""
-      , types: []
     },
     { id: 7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
-      , address: ""
-      , types: []
     },
   ];
-  const [items, setItems] = useState(markers);
+  const [items, setItems] = useState<PlaceInfo[]>(markers);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   
   const addNewPlace = (plc: any) => {
@@ -135,7 +121,7 @@ function App() {
             return {
               ...item,
               address: data.display_name as string,
-              types: [...item.types, data.type] as  never[],
+              types: [data.type, data.class] as  never[],
             };
           } catch (err) {
             console.error('Error fetching location:', err);
@@ -192,9 +178,11 @@ function App() {
                       </Text>
                       <Text as="div" size="2" color="gray" className="item-detail">
                         <Flex gap="2">
-                          <Badge className={getBadgeClassName(item.types.toString().replaceAll("_", " "))}>
-                            {item.types.toString().replaceAll("_", " ")}
-                          </Badge>
+                          {(item.types ?? []).map(( type ) => (
+                            <Badge className={getBadgeClassName(type.replaceAll("_", " "))}>
+                              {type.replaceAll("_", " ")}
+                            </Badge>
+                          ))}
                         </Flex>
                          <br />
                         {item.address}
