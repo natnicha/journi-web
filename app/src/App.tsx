@@ -20,7 +20,7 @@ type PlaceInfo = {
   detail: string;
   src: string;
   address?: string;
-  types?: string[];
+  tags?: string[];
 };
 
 function getBadgeClassName(content: string) {
@@ -44,7 +44,7 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
           title: "xxx",
           detail: "xxxx",
           src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no",
-          types: ["temple"],
+          tags: ["temple"],
         }
         addNewPlace(place)
       } catch (error) {
@@ -121,7 +121,7 @@ function App() {
             return {
               ...item,
               address: data.display_name as string,
-              types: [data.type, data.class] as  never[],
+              tags: [data.type, data.class] as  never[],
             };
           } catch (err) {
             console.error('Error fetching location:', err);
@@ -178,9 +178,9 @@ function App() {
                       </Text>
                       <Text as="div" size="2" color="gray" className="item-detail">
                         <Flex gap="2">
-                          {(item.types ?? []).map(( type ) => (
-                            <Badge className={getBadgeClassName(type.replaceAll("_", " "))}>
-                              {type.replaceAll("_", " ")}
+                          {(item.tags ?? []).map(( tag ) => (
+                            <Badge className={getBadgeClassName(tag.replaceAll("_", " "))}>
+                              {tag.replaceAll("_", " ")}
                             </Badge>
                           ))}
                         </Flex>
