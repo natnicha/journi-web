@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, Badge, Skeleton } from '@radix-ui/themes';
+import { Avatar, Grid, Flex, Text,Box, Button, Badge, Skeleton, TextArea } from '@radix-ui/themes';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
@@ -191,6 +191,7 @@ function App() {
                           ) : ( <Skeleton className="title-skeleton"/>)
                         }
                       </Text> 
+                      <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
                     </Box>
                   </Flex>
                   <SortableList.DragHandle />
