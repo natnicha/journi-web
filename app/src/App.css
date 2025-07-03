@@ -172,6 +172,10 @@ body {
   background-color: var(--color-tropical-orchid-whisper);
 }
 
+.title-skeleton {
+  style: h-6 w-24;
+}
+
 .pin-on-card {
   position: relative;
 	color: #FFFFFF;

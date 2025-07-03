@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, Badge } from '@radix-ui/themes';
+import { Avatar, Grid, Flex, Text,Box, Button, Badge, Skeleton } from '@radix-ui/themes';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
@@ -184,9 +184,12 @@ function App() {
                             </Badge>
                           ))}
                         </Flex>
-                        <Text as="div" size="1" className="item-address">
-                          {item.address}
-                        </Text>
+                        {item.address ? (
+                          <Text as="div" size="1" className="item-address">
+                            {item.address}
+                          </Text>
+                          ) : ( <Skeleton className="title-skeleton"/>)
+                        }
                       </Text> 
                     </Box>
                   </Flex>
