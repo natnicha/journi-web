@@ -169,7 +169,7 @@ function App() {
                       </div>
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
-                    <Box>
+                    <Box   className="item-content">
                       <Text as="div" className="item-title">
                         {item.title}
                       </Text>
@@ -188,7 +188,10 @@ function App() {
                           <Text as="div" size="1" className="item-address">
                             {item.address}
                           </Text>
-                          ) : ( <Skeleton className="title-skeleton"/>)
+                          ) : ( <Skeleton className="item-address">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis 
+                            erat, fringilla sed commodo sed, aliquet nec magna.
+                          </Skeleton>)
                         }
                       </Text> 
                       <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />

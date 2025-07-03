@@ -125,6 +125,12 @@ body {
   width: 100%;
 }
 
+.item-content{
+	min-width: 50vh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .item-title {
   text-align: left;
   font-weight: bold;
@@ -172,10 +178,6 @@ body {
   background-color: var(--color-tropical-orchid-whisper);
 }
 
-.title-skeleton {
-  style: h-6 w-24;
-}
-
 .pin-on-card {
   position: relative;
 	color: #FFFFFF;
@@ -183,4 +185,9 @@ body {
 	font-size: 13px;
 	font-weight: bold;
 	text-align: center;
+}
+
+.user-notes{
+  margin-top: 0.5rem;
+  padding: 0.5rem;
 }
