@@ -106,40 +106,40 @@ function App() {
 
   useEffect(() => {
     const fetchAllLocations = async () => {
-      const updatedItems = await Promise.all(
-        items.map(async (item) => {
-          const [lat, lon] = item.position.toString().split(',');
-          try {
-            const userAgent = { 'User-Agent': 'Journi/1.0',  };
-            const acceptLangAll = { 'Accept-Language': '*' };
-            const acceptLangEn = { 'Accept-Language': 'en' };
-            const resEn = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, 
-              { headers: {...acceptLangEn, ...userAgent} },
-            );
-            const data = await resEn.json();
-            
-            const resLocal = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-              { headers: {...acceptLangAll, ...userAgent} },
-            );
-            const dataLocal = await resLocal.json();
-            return {
-              ...item,
-              title: (data.name ? data.name : "Untitled") as string,
-              detail: (dataLocal.name === "" ? data.name : dataLocal.name) as string,
-              address: data.display_name as string,
-              tags: [data.type, data.class] as never[],
-            };
-          } catch (err) {
-            console.error('Error fetching location:', err);
-            return item; 
-          }
-        })
-      );
-      setItems(updatedItems);
-    };
+      var item = items[items.length-1]; 
+      var updatedItem = null;
+      const [lat, lon] = item.position.toString().split(',');
+      try {
+        const userAgent = { 'User-Agent': 'Journi/1.0',  };
+        const acceptLangAll = { 'Accept-Language': '*' };
+        const acceptLangEn = { 'Accept-Language': 'en' };
+        const resEn = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, 
+          { headers: {...acceptLangEn, ...userAgent} },
+        );
+        const data = await resEn.json();
+        
+        const resLocal = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+          { headers: {...acceptLangAll, ...userAgent} },
+        );
+        const dataLocal = await resLocal.json();
+        updatedItem = {
+          ...item,
+          title: (data.name ? data.name : "Untitled") as string,
+          detail: (dataLocal.name === "" ? data.name : dataLocal.name) as string,
+          address: data.display_name as string,
+          tags: [data.type, data.class] as never[],
+        };
+      } catch (err) {
+        console.error('Error fetching location:', err);
+        updatedItem = item; 
+      }
 
+    items[items.length-1] = updatedItem as PlaceInfo;
+    setItems([...items]);
+
+    }
     fetchAllLocations();
     setIsAddNewItem(false);
   }, [isAddNewItem]);
