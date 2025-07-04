@@ -146,7 +146,6 @@ function App() {
   
   return (
     <>
-    <Flex direction="column" gap="3">
       <Grid columns="2" gap="0" rows="1" width="auto">
           <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
             <TileLayer
@@ -163,7 +162,7 @@ function App() {
             ))}
           </MapContainer>
           <ScrollArea.Root className="ScrollAreaRoot">
-		      <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
+          <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
           <Flex direction="column" gap="2">
             <SortableList
               items={items}
@@ -239,10 +238,6 @@ function App() {
         </ScrollArea.Scrollbar>
       </ScrollArea.Root>
       </Grid>
-      <Flex direction="column" gap="2">
-        <Button>Plan it!</Button>
-      </Flex>
-    </Flex>
     </>
   )
 }

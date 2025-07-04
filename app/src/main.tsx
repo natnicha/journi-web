@@ -4,6 +4,7 @@ import { Flex, Container, TabNav, Theme} from "@radix-ui/themes";
 import { Menu } from "lucide-react";
 import "@radix-ui/themes/styles.css";
 import App from './App.tsx'
+import './main.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -23,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
         </Flex>
 
         <div className="account">
-          <Menu size={28} className="text-gray-800 cursor-pointer" />
+          <Menu size={20} className="menu" />
         </div>
       </nav>
 

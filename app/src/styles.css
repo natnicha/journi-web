@@ -1,7 +1,7 @@
 @import "@radix-ui/colors/black-alpha.css";
 
 .ScrollAreaRoot {
-	height: 78vh;
+	height: 90vh;
 	border-radius: 4px;
 	overflow: hidden;
 	box-shadow: 0 2px 10px var(--black-a4);
