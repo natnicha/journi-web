@@ -147,7 +147,7 @@ function App() {
   return (
     <>
     <Flex direction="column" gap="3">
-      <Grid columns="2" gap="3" rows="1" width="auto">
+      <Grid columns="2" gap="0" rows="1" width="auto">
           <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -170,7 +170,7 @@ function App() {
               onChange={setItems}
               renderItem={(item) => (
                 <SortableList.Item id={item.id}>
-                  <Flex direction="row" gap="3">
+                  <Flex direction="row" gap="1">
                     <div>
                       <img src={"./src/assets/map-pin.png"}/>
                       <div className="pin-on-card">

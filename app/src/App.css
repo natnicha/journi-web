@@ -1,12 +1,11 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 0.5rem;
   text-align: center;
   height: '100vh',
 }
 body {
   overflow: hidden;
+  margin: 0;
 }
 :root {
   --color-tropical-mango-cream: #FFE5B4;
@@ -59,7 +58,6 @@ body {
   --color-tropical-orchid-vibrant-violet: #845EC2;
 
 }
-
 
 .logo {
   flex: 1;
