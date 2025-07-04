@@ -170,6 +170,9 @@ function App() {
               renderItem={(item) => (
                 <SortableList.Item id={item.id}>
                   <Flex direction="row" gap="1">
+                    <div className='bin'>
+                      <img src={"./src/assets/bin.png"}/>
+                    </div>
                     <div>
                       <img src={"./src/assets/map-pin.png"}/>
                       <div className="pin-on-card">

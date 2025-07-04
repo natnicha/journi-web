@@ -47,3 +47,17 @@
   overflow: visible;
   fill: #919eab;
 }
+
+.SortableList {
+    position: relative;
+  }
+
+.SortableItem .bin {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.SortableItem:hover .bin {
+  opacity: 0.6;
+  cursor: pointer;
+}

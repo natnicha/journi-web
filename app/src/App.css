@@ -69,7 +69,8 @@ body {
 }
 
 .item-content{
-	min-width: 50vh;
+  justify-content: space-between;
+	width: 30vw;
   flex-direction: column;
   overflow: hidden;
 }
@@ -119,6 +120,12 @@ body {
 .badge-orchid {
   color:  var(--color-tropical-orchid-vibrant-violet);
   background-color: var(--color-tropical-orchid-whisper);
+}
+
+.bin {
+  width: 1.2vw;
+  height: 1.2vw;
+  display: flex;
 }
 
 .pin-on-card {
