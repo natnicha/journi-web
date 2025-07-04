@@ -97,12 +97,16 @@ function App() {
     setIsAddNewItem(true);
   };
 
+  const removeItemById = (idToRemove: number) => {
+    setItems(prevItems => prevItems.filter(item => item.id !== idToRemove));
+  };
+
   // Auto-scroll to bottom when items change
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [items]);
+  }, [isAddNewItem]);
 
   useEffect(() => {
     const fetchAllLocations = async () => {
@@ -170,7 +174,7 @@ function App() {
               renderItem={(item) => (
                 <SortableList.Item id={item.id}>
                   <Flex direction="row" gap="1">
-                    <div className='bin'>
+                    <div className='bin' onClick={() => removeItemById(item.id)}>
                       <img src={"./src/assets/bin.png"}/>
                     </div>
                     <div>
