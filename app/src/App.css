@@ -123,9 +123,11 @@ body {
 }
 
 .bin {
-  width: 1.2vw;
-  height: 1.2vw;
-  display: flex;
+  flex: 1;
+  max-width: 15px;
+  min-width: 5px;
+  width: 100%;
+  height: auto;
 }
 
 .pin-on-card {
