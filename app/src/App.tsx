@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Button, Badge, Skeleton, TextArea } from '@radix-ui/themes';
+import { Avatar, Grid, Flex, Text,Box, TextField, Badge, Skeleton, TextArea } from '@radix-ui/themes';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from './components';
-import { ScrollArea } from 'radix-ui';
+import { Form, ScrollArea } from 'radix-ui';
 import '@radix-ui/themes/styles.css';
 import 'leaflet/dist/leaflet.css';
 import './App.css'
@@ -21,6 +21,7 @@ type PlaceInfo = {
   src: string;
   address?: string;
   tags?: string[];
+  cost?: string;
 };
 
 function getBadgeClassName(content: string) {
@@ -148,6 +149,29 @@ function App() {
     setIsAddNewItem(false);
   }, [isAddNewItem]);
   
+  const formatNumber = (value: string) => {
+    const clean = value.replace(/,/g, "");
+    const num = Number(clean);
+    if (isNaN(num)) 
+      return "";
+    else 
+      return new Intl.NumberFormat("en-US").format(num);
+  };
+
+  const handleChange = (id: number, items: PlaceInfo[], value: string) => {
+    const updatedItem = items.map(item =>
+      item.id === id ? { ...item, cost: value.replace(/,/g, "") } : item
+    ) as PlaceInfo[];
+    setItems(updatedItem);
+  };
+
+  const handleBlur = (id: number, items: PlaceInfo[]) => {
+    const updatedItem = items.map(item =>
+      item.id === id ? { ...item, cost: formatNumber(String(item.cost)) } : item
+    ) as PlaceInfo[];
+    setItems(updatedItem);
+  };
+
   return (
     <>
       <Grid columns="2" gap="0" rows="1" width="auto">
@@ -185,6 +209,7 @@ function App() {
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
                     
+                    <Flex direction="row" gap="1">
                     {item.title === "" ? (
                     <Box className="item-content">
                       <Text as="div" size="2" className="item-title">
@@ -227,9 +252,12 @@ function App() {
                         <Text as="div" size="1" className="item-address">
                           {item.address}
                         </Text>                        
-                      <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
+                      <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…"/>
                     </Box>
                     )}
+                  </Flex>
+                    <input className="cost"  pattern='^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$'  placeholder="$" value={item.cost} onChange={(e) =>
+                handleChange(item.id, items as PlaceInfo[], e.target.value)} onBlur={() => handleBlur(item.id, items as PlaceInfo[])}/>
                   </Flex>
                   <SortableList.DragHandle />
                 </SortableList.Item>

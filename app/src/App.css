@@ -70,7 +70,7 @@ body {
 
 .item-content{
   justify-content: space-between;
-	width: 35vw;
+	width: 32vw;
   flex-direction: column;
   overflow: hidden;
 }
@@ -143,4 +143,14 @@ body {
 .user-notes{
   margin-top: 0.5rem;
   padding: 0.5rem;
+}
+
+.cost{
+	width: 4rem;
+  text-align: right;
+  padding: 0px 5px;
+  background: var(--color-tropical-palm-palm-leaf);
+  border: none;
+  outline: none;
+  border-radius: 5px;
 }
