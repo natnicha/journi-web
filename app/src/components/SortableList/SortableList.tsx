@@ -20,6 +20,7 @@ import { DragHandle, SortableItem, SortableOverlay } from "./components";
 
 interface BaseItem {
   id: UniqueIdentifier;
+  order?: number;
 }
 
 interface Props<T extends BaseItem> {
@@ -44,7 +45,15 @@ export function SortableList<T extends BaseItem>({
       coordinateGetter: sortableKeyboardCoordinates
     })
   );
-
+  const reorderItems = (items: Array<T>) => {
+    let newId = 1;
+    const reordered = items.map((item) => ({
+      ...item,
+      order: newId++,
+    }));
+    return reordered;
+  };
+ 
   return (
     <DndContext
       sensors={sensors}
@@ -56,7 +65,14 @@ export function SortableList<T extends BaseItem>({
           const activeIndex = items.findIndex(({ id }) => id === active.id);
           const overIndex = items.findIndex(({ id }) => id === over.id);
 
-          onChange(arrayMove(items, activeIndex, overIndex));
+          var newId = 1;
+          items.forEach((item) => {
+            item.order = newId;
+            newId = newId + 1;
+          });
+          const movedItems = arrayMove(items, activeIndex, overIndex);
+          onChange(reorderItems(movedItems));
+          // onChange(reorderItems(items));
         }
         setActive(null);
       }}

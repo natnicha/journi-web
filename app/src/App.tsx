@@ -15,6 +15,7 @@ const zoom_default: number = 15
 
 type PlaceInfo = {
   id: number;
+  order?: number;
   position: LatLngExpression;
   title: string;
   detail: string;
@@ -66,25 +67,25 @@ function App() {
   const plc7: LatLngExpression = [13.735912709116183, 100.52462681828554]; //Cafe
 
   const markers: PlaceInfo[] = [
-    { id: 1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
+    { id: 1, order:1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no"
     },
-    { id: 2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
+    { id: 2, order:2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4np6sSA4saMvYxbBlbZ0yvJC44Da6hz8DTkc44iGX8i8n1_XLQ_XVISvbJGLi_ayhY8k0gIX26qIl9M-__wTX_f5fohMH5DngaiQL9XTnWnIdwdi380JwPWJQ5nJ180F-mwoPvBxAw=w408-h725-k-no"
     },
-    { id: 3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
+    { id: 3, order:3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nojNwN-9BoahfZK7mGGJh2pazTiENSQH06r2MiOlIfcmHOjCRU2CePZ-uIeUcT1CX1Jo9WDBzOdlFrMXakp1w82BRCPOHCh0hbCoYZyzOEX5VdVD_k5op2vTc29gahLzcM2bcRcjA=w408-h272-k-no"
     },
-    { id: 4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
+    { id: 4, order:4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
     },
-    { id: 5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
+    { id: 5, order:5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr0wwWWc8ZaFMwX6ol5XZmGjeS179fZldbEsY-G18DwHQB5bCG_b-sdlk41HViEk9ZdTu_HHQkxYjURMCROPBNp8gKPyTpusxmaqdfVGyhACAMR99967uuMq9RDztMt9gvHk3XRaw=w408-h306-k-no"
     },
-    { id: 6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
+    { id: 6, order:6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
       src: "https://lh3.googleusercontent.com/p/AF1QipO47M8DCVLRu67siHMq6UHgX7DixyMI_iAIr4fE=w408-h279-k-no"
     },
-    { id: 7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
+    { id: 7, order:7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
   ];
@@ -94,6 +95,7 @@ function App() {
   
   const addNewPlace = (plc: any) => {
     plc.id = items.length+1
+    plc.order = items.length+1
     setItems((prev) => [...prev, plc]); 
     setIsAddNewItem(true);
   };
@@ -181,8 +183,8 @@ function App() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ReverseGeocodeMarker addNewPlace={addNewPlace} />
-            {items.map(({ id, position, title, detail }) => (
-              <Marker key={id} position={position} icon={new NumberedDivIcon({number:id} as any)}>
+            {items.map(({ order, position, title, detail }) => (
+              <Marker key={order} position={position} icon={new NumberedDivIcon({number:order} as any)}>
                 <Popup> 
                   {title} <br/> {detail} <br/>
                 </Popup> 
@@ -204,7 +206,7 @@ function App() {
                     <div>
                       <img src={"./src/assets/map-pin.png"}/>
                       <div className="pin-on-card">
-                        {item.id}
+                        {item.order}
                       </div>
                     </div>
                     <Avatar size="3" src={item.src} radius="large" fallback="J" />
