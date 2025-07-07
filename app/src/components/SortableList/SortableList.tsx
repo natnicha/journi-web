@@ -65,14 +65,8 @@ export function SortableList<T extends BaseItem>({
           const activeIndex = items.findIndex(({ id }) => id === active.id);
           const overIndex = items.findIndex(({ id }) => id === over.id);
 
-          var newId = 1;
-          items.forEach((item) => {
-            item.order = newId;
-            newId = newId + 1;
-          });
           const movedItems = arrayMove(items, activeIndex, overIndex);
           onChange(reorderItems(movedItems));
-          // onChange(reorderItems(items));
         }
         setActive(null);
       }}
