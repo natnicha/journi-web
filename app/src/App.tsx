@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, Badge, Skeleton, TextArea } from '@radix-ui/themes';
+import { Avatar, Grid, Flex, Text,Box, Badge, Skeleton, TextArea, Button } from '@radix-ui/themes';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
@@ -8,6 +8,7 @@ import { ScrollArea } from 'radix-ui';
 import { DayPicker } from 'react-day-picker';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
 import { format } from 'date-fns';
+import { CalendarDays } from 'lucide-react';
 import '@radix-ui/themes/styles.css';
 import 'react-day-picker/dist/style.css';
 import 'leaflet/dist/leaflet.css';
@@ -228,12 +229,12 @@ function App() {
             <div className='date-picker-panel'>
               <Popover>
                 <PopoverTrigger asChild>
-                  <button className="border px-4 py-2 rounded bg-white text-sm shadow-sm hover:bg-gray-50">
+                  <Button className="date-picker-button" variant="solid" size="2" radius="large">
+                    <CalendarDays className="w-4 h-4" />
                     {formatRange()}
-                  </button>
+                  </Button>
                 </PopoverTrigger>
-
-                <PopoverContent className="date-picker-content" side="bottom" align="start">
+                <PopoverContent className="date-picker-content" side="top" align="start">
                   <DayPicker
                     mode="range"
                     selected={range}
