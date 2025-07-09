@@ -105,10 +105,11 @@ function App() {
     setItems(reorderItems(filteredItems));
   };
 
-    const reorderItems = (items: PlaceInfo[]) => {
+  const reorderItems = (items: PlaceInfo[]) => {
     let newId = 1;
     const reordered = items.map((item) => ({
       ...item,
+      id: newId,
       order: newId++,
     }));
     return reordered;
