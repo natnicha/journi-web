@@ -101,7 +101,17 @@ function App() {
   };
 
   const removeItemById = (idToRemove: number) => {
-    setItems(prevItems => prevItems.filter(item => item.id !== idToRemove));
+    const filteredItems = items.filter(item => item.id !== idToRemove);
+    setItems(reorderItems(filteredItems));
+  };
+
+    const reorderItems = (items: PlaceInfo[]) => {
+    let newId = 1;
+    const reordered = items.map((item) => ({
+      ...item,
+      order: newId++,
+    }));
+    return reordered;
   };
 
   // Auto-scroll to bottom when items change
