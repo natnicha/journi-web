@@ -64,6 +64,26 @@ body {
   width: 100%;
 }
 
+.date-picker-panel {
+  position: absolute;
+  height: 3vh;
+  width: 100%;
+  z-index: 10000 !important;
+}
+
+.date-picker-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  background-color: var(--color-tropical-coconut-white-sand); 
+  border-radius: 5px;
+  box-shadow:  0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .item-skeleton {
   text-align: left;
 }

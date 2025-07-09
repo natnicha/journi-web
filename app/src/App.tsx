@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { Avatar, Grid, Flex, Text,Box, TextField, Badge, Skeleton, TextArea } from '@radix-ui/themes';
+import { Avatar, Grid, Flex, Text,Box, Badge, Skeleton, TextArea } from '@radix-ui/themes';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import NumberedDivIcon from './NumberedDivIcon';
 import { SortableList } from './components';
-import { Form, ScrollArea } from 'radix-ui';
+import { ScrollArea } from 'radix-ui';
+import { DayPicker } from 'react-day-picker';
+import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
+import { format } from 'date-fns';
 import '@radix-ui/themes/styles.css';
+import 'react-day-picker/dist/style.css';
 import 'leaflet/dist/leaflet.css';
 import './App.css'
 import './styles.css';
@@ -23,6 +27,11 @@ type PlaceInfo = {
   address?: string;
   tags?: string[];
   cost?: string;
+};
+
+type Range = {
+  from: Date | undefined;
+  to: Date | undefined;
 };
 
 function getBadgeClassName(content: string) {
@@ -184,7 +193,17 @@ function App() {
     ) as PlaceInfo[];
     setItems(updatedItem);
   };
+  
+  const [range, setRange] = useState<Range>({ from: new Date(), to: new Date()});
 
+  const formatRange = () => {
+    if (range.from && range.to) {
+      return `${format(range.from, 'PPP')} → ${format(range.to, 'PPP')}`;
+    } else if (range.from) {
+      return `${format(range.from, 'PPP')} → ...`;
+    }
+    return 'Pick a date range';
+  };
   return (
     <>
       <Grid columns="2" gap="0" rows="1" width="auto">
@@ -204,7 +223,33 @@ function App() {
           </MapContainer>
           <ScrollArea.Root className="ScrollAreaRoot">
           <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
+            
           <Flex direction="column" gap="2">
+            <div className='date-picker-panel'>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="border px-4 py-2 rounded bg-white text-sm shadow-sm hover:bg-gray-50">
+                    {formatRange()}
+                  </button>
+                </PopoverTrigger>
+
+                <PopoverContent className="date-picker-content" side="bottom" align="start">
+                  <DayPicker
+                    mode="range"
+                    selected={range}
+                    onSelect={(selected) => {
+                      if (selected) {
+                        setRange({ from: selected.from, to: selected.to });
+                      } else {
+                        setRange({ from: undefined, to: undefined });
+                      }
+                    }}
+                    numberOfMonths={2}
+                    showOutsideDays
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
             <SortableList
               items={items}
               onChange={setItems}
