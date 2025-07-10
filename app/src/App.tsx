@@ -290,8 +290,8 @@ function App() {
               renderItem={(item) => (
                 <SortableList.Item id={item.id}>
                   <Flex direction="row" gap="1">
-                    <div onClick={() => removeItemById(item.id)}>
-                      <img className='bin' src={"./src/assets/bin.png"}/>
+                    <div>
+                      <img className='bin' src={"./src/assets/bin.png"} onClick={() => removeItemById(item.id)}/>
                     </div>
                     <div>
                       <img src={getMarkerSrc(item.day)} />
