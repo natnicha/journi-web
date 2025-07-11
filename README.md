@@ -2,13 +2,13 @@
 Journi is a modern, cross-platform web application that helps travelers effortlessly plan, organize, and visualize their trips. From mapping out multi-day itineraries to managing places, notes, and activities — Journi brings simplicity and structure to your travel planning experience.
 
 ## 🌍 Key Features
-- [ ] Interactive Itinerary Builder
+- [x] Interactive Itinerary Builder
 Drag and drop your plans by day, add locations, notes, and time slots for a clear trip overview.
 
-- [ ]  Map Integration
+- [x]  Map Integration
 See your entire route visually with map views powered by Google Maps or Mapbox.
 
-- [ ] Cross-Platform
+- [x] Cross-Platform
 Use it on any device — desktop, tablet, or mobile. Works great as a PWA (Progressive Web App).
 
 - [ ] Export Plans
@@ -26,6 +26,11 @@ Plan trips together with friends or family in real-time.
 - Solo travelers organizing complex multi-stop journeys
 - Friends or families co-planning vacations
 - Travel bloggers or agencies looking to structure itineraries visually
+
+
+## 📱 Visual
+Pick your travel dates, drop pins on the map to add places, jot down notes and costs, and organize your stops any way you like. Boom — your trip is all set! 🚗✨
+![Journi](./assets/demo.gif)
 
 
 ## 💻Contributing

@@ -1,0 +1,181 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+  height: '100vh',
+}
+body {
+  overflow: hidden;
+  margin: 0;
+  height: '90vh',
+}
+:root {
+  --color-tropical-mango-cream: #FFE5B4;
+  --color-tropical-lagoon-mist: #B2EBF2;
+  --color-tropical-palm-leaf: #B8E0D2;
+  --color-tropical-sunset-sorbet: #FFB7C3;
+  --color-tropical-orchid-lavender-mist: #E3D5F5;
+  --color-tropical-coconut-milk: #FDF6F0;
+
+  --color-tropical-mango-tin: #FFF1DB;
+  --color-tropical-mango-light: #FFE5B4;
+  --color-tropical-mango-cream: #FFC97A;
+  --color-tropical-mango-deep: #FFB347;
+  --color-tropical-mango-toasted: #E6953B;
+
+  --color-tropical-lagoon-whisper: #E0FAFC;
+  --color-tropical-lagoon-mist: #B2EBF2;
+  --color-tropical-lagoon-soft: #7EDCE2;
+  --color-tropical-lagoon-deep-seafoam: #4CC6CE;
+  --color-tropical-lagoon-tidewater-Blue: #2E9BAE;
+
+  --color-tropical-palm-misty-palm: #EAF7F3;
+  --color-tropical-palm-palm-leaf: #B8E0D2;
+  --color-tropical-palm-fresh-palm: #92D1C1;
+  --color-tropical-palm-soft-jungle: #5BB4A1;
+  --color-tropical-palm-sea-forest: #3B887A;
+
+  --color-tropical-sunset-sorbet-Mist: #FFE9EC;
+  --color-tropical-sunset-sunset-sorbet: #FFB7C3;
+  --color-tropical-sunset-blush-coral: #FF8DA6;
+  --color-tropical-sunset-rose-guava: #F76C8A;
+  --color-tropical-sunset-tropical-hibiscus: #D74D6A;
+
+  --color-tropical-orchid-whisper: #F4EBFA;   
+  --color-tropical-orchid-lavender: #E3D5F5;
+  --color-tropical-orchid-soft-bougainvillea: #C8AEEA;
+  --color-tropical-orchid-flower-blush: #A87ED8;
+  --color-tropical-orchid-vibrant-violet: #845EC2; 
+
+  --color-tropical-coconut-white-sand: #FFFFFF;
+  --color-tropical-coconut-coconut-milk: #FDF6F0;
+  --color-tropical-coconut-cream-drop: #F5ECE3;
+  --color-tropical-coconut-beach-foam: #EBDFD2;
+  --color-tropical-coconut-warm-shell: #DCCCB8;
+
+  --color-tropical-orchid-whisper: #F4EBFA;
+  --color-tropical-orchid-lavender-mist: #E3D5F5;
+  --color-tropical-orchid-soft-bougainvillea: #C8AEEA;
+  --color-tropical-orchid-flower-blush: #A87ED8;
+  --color-tropical-orchid-vibrant-violet: #845EC2;
+
+}
+
+.map {
+  width: 100%;
+}
+
+.date-picker-panel {
+  position: absolute;
+  height: 3vh;
+  width: 100%;
+  z-index: 10000 !important;
+}
+
+.date-picker-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  background-color: var(--color-tropical-coconut-white-sand); 
+  border-radius: 5px;
+  box-shadow:  0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-skeleton {
+  text-align: left;
+}
+
+.item-content{
+  justify-content: space-between;
+	width: 32vw;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.item-title {
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.item-detail {
+  text-align: left;
+  font-size: 13px;
+  color: #333;
+}
+
+
+.item-address {
+  text-align: left;
+  font-style: italic;
+  color: #6b6b6b;
+  margin-top: 0.7rem;
+}
+
+
+.badge-mango {
+  color:  var(--color-tropical-mango-toasted);
+  background-color: var(--color-tropical-mango-tin);
+}
+
+.badge-lagoon {
+  color:  var(--color-tropical-lagoon-tidewater-Blue);
+  background-color: var(--color-tropical-lagoon-whisper);
+}
+
+.badge-palm {
+  color:  var(--color-tropical-palm-sea-forest);
+  background-color: var(--color-tropical-palm-misty-palm);
+}
+
+.badge-sunset {
+  color:  var(--color-tropical-sunset-rose-guava);
+  background-color: var(--color-tropical-sunset-sorbet-Mist);
+}
+
+.badge-orchid {
+  color:  var(--color-tropical-orchid-vibrant-violet);
+  background-color: var(--color-tropical-orchid-whisper);
+}
+
+.bin {
+  flex: 1;
+  max-width: 20px;
+  min-width: 15px;
+  width: 100%;
+  height: auto;
+  margin: 0.1vw;
+}
+
+.pin-on-card {
+  position: relative;
+	color: #FFFFFF;
+	top: -42px;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.user-notes{
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+
+.cost{
+	width: 4rem;
+  text-align: right;
+  padding: 0px 5px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.rdp-root {
+  --rdp-accent-color: var(--color-tropical-palm-soft-jungle);
+  --rdp-accent-background-color: var(--color-tropical-palm-misty-palm);
+  --rdp-today-color: var(--color-tropical-palm-sea-forest);
+}
