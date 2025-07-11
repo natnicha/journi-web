@@ -118,7 +118,7 @@ body {
 
 
 .badge-mango {
-  color:  var(--color-tropical-mango-toasted);
+  color:  var(--color-tropical-palm-misty-palm);
   background-color: var(--color-tropical-mango-tin);
 }
 
@@ -169,8 +169,13 @@ body {
 	width: 4rem;
   text-align: right;
   padding: 0px 5px;
-  /* background: var(--color-tropical-palm-palm-leaf); */
   border: none;
   outline: none;
   border-radius: 5px;
+}
+
+.rdp-root {
+  --rdp-accent-color: var(--color-tropical-palm-soft-jungle);
+  --rdp-accent-background-color: var(--color-tropical-palm-misty-palm);
+  --rdp-today-color: var(--color-tropical-palm-sea-forest);
 }
