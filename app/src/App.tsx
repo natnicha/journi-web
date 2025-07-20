@@ -20,6 +20,8 @@ const zoom_default: number = 15
 
 type PlaceInfo = {
   day: number;
+  date: string;
+  isStartSection?: boolean;
   id: number;
   order?: number;
   position: LatLngExpression;
@@ -53,6 +55,7 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
         const plc: LatLngExpression = [lat, lng];
         var place = {
           day: 1,
+          date: new Date().toLocaleDateString(),
           id: 0,
           position: plc,
           title: "",
@@ -83,42 +86,43 @@ function App() {
   const plc11: LatLngExpression = [13.737392014744712, 100.50011779614503]; //Guan Yu Shrine (Khlong San)
 
   const markers: PlaceInfo[] = [
-    { day: 1, id: 1, order:1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
+    { day: 1, date: '7/1/2025', isStartSection:true, id: 1, order:1, position: plc1, title:"Wat Ratchanatdaram Worawihan", detail:"วัด​ราชนัดดารามวรวิหาร​",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nocKS_n7LfYXrjscSLL_inNyakjdm3YMtFV0NZgHGQA0R2akgrcz3TrI-RrJxVAgVmdg7yAN8ywEZmYZK8UEff7q9cm4tUCWHoqp57KGA5c7Xsq8NnL3yOiLAe02Uz3GXDen0U=w408-h544-k-no"
     },
-    { day: 1, id: 2, order:2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
+    { day: 1, date: '7/1/2025', id: 2, order:2, position: plc2, title:"Sao Chingcha", detail:"เสาชิงช้า",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4np6sSA4saMvYxbBlbZ0yvJC44Da6hz8DTkc44iGX8i8n1_XLQ_XVISvbJGLi_ayhY8k0gIX26qIl9M-__wTX_f5fohMH5DngaiQL9XTnWnIdwdi380JwPWJQ5nJ180F-mwoPvBxAw=w408-h725-k-no"
     },
-    { day: 1, id: 3, order:3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
+    { day: 1, date: '7/1/2025', id: 3, order:3, position: plc3, title:"The Grand Palace", detail:"พระบรมมหาราชวัง",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nojNwN-9BoahfZK7mGGJh2pazTiENSQH06r2MiOlIfcmHOjCRU2CePZ-uIeUcT1CX1Jo9WDBzOdlFrMXakp1w82BRCPOHCh0hbCoYZyzOEX5VdVD_k5op2vTc29gahLzcM2bcRcjA=w408-h272-k-no"
     },
-    { day: 1, id: 4, order:4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
+    { day: 1, date: '7/1/2025', id: 4, order:4, position: plc4, title:"China Town", detail:"ไชน่าทาวน์ (เยาวราช)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr3EvywM6eKq3FLgi19LxJ6PX8nR5BRAStTOHsJZszJzZ7dyIxkyRKVRjxwEl7cy5Ts4cYKy_ollUo1O2E1_nw3lr-s2QYh4diQ0PBS9Bt70g9sukwkKg4XJ-RY-O1K8kXwXFW5=w408-h306-k-no"
     },
-    { day: 1, id: 5, order:5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
+    { day: 1, date: '7/1/2025', id: 5, order:5, position: plc5, title:"EAT ME RESTAURANT", detail:"อีทมี เรสเตอรองท์",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr0wwWWc8ZaFMwX6ol5XZmGjeS179fZldbEsY-G18DwHQB5bCG_b-sdlk41HViEk9ZdTu_HHQkxYjURMCROPBNp8gKPyTpusxmaqdfVGyhACAMR99967uuMq9RDztMt9gvHk3XRaw=w408-h306-k-no"
     },
-    { day: 1, id: 6, order:6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
+    { day: 1, date: '7/1/2025', id: 6, order:6, position: plc6, title:"Mandarin Hotel Bangkok, managed by Centre Point", detail:"โรงแรมแมนดาริน กรุงเทพฯ",
       src: "https://lh3.googleusercontent.com/p/AF1QipO47M8DCVLRu67siHMq6UHgX7DixyMI_iAIr4fE=w408-h279-k-no"
     },
-    { day: 1, id: 7, order:7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
+    { day: 1, date: '7/1/2025', id: 7, order:7, position: plc7, title:"White Flower Cafe", detail:"ครัวดอกไม้ขาว",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
-    { day: 2, id: 8, order:1, position: plc8, title:"Pak Khlong Talat (Flower Market)", detail:"ปากคลองตลาด",
+    { day: 2, date: '7/2/2025', isStartSection:true, id: 8, order:1, position: plc8, title:"Pak Khlong Talat (Flower Market)", detail:"ปากคลองตลาด",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
-    { day: 3, id: 9, order:1, position: plc9, title:"Wat Prayurawongsawas Worawihan", detail:"วัดประยุรวงศาวาสวรวิหาร",
+    { day: 3, date: '7/3/2025', isStartSection:true, id: 9, order:1, position: plc9, title:"Wat Prayurawongsawas Worawihan", detail:"วัดประยุรวงศาวาสวรวิหาร",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
-    { day: 4, id: 10, order:1, position: plc10, title:"Princess Mother Memorial Park", detail:"อุทยานเฉลิมพระเกียรติสมเด็จพระศรีนครินทราบรมราชชนนี",
+    { day: 4, date: '7/4/2025', isStartSection:true, id: 10, order:1, position: plc10, title:"Princess Mother Memorial Park", detail:"อุทยานเฉลิมพระเกียรติสมเด็จพระศรีนครินทราบรมราชชนนี",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
-    { day: 5, id: 11, order:1, position: plc11, title:"Guan Yu Shrine (Khlong San)", detail:"ศาลเจ้ากวนอู (คลองสาน)",
+    { day: 5, date: '7/5/2025', isStartSection:true, id: 11, order:1, position: plc11, title:"Guan Yu Shrine (Khlong San)", detail:"ศาลเจ้ากวนอู (คลองสาน)",
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
   ];
   const [items, setItems] = useState<PlaceInfo[]>(markers);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const scroll2Ref = useRef<HTMLDivElement | null>(null);
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   
   const addNewPlace = (plc: any) => {
@@ -146,7 +150,7 @@ function App() {
   // Auto-scroll to bottom when items change
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [isAddNewItem]);
 
@@ -224,6 +228,37 @@ function App() {
     return 'Pick a date range';
   };
 
+  const [itinerary, setItinerary] = useState<String[]>([]);
+  const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  
+  const handleScrollTo = (id: string) => {
+    if (scrollRef.current && scrollRefs.current[id]) {
+      if (scrollRefs.current[id]) {
+        scrollRef.current.scrollTo({ top: scrollRefs.current[id]!.offsetTop, behavior: 'smooth' });
+      }
+    }
+  };
+
+  function addDays(currentDate: Date): Date { 
+    let date = new Date(currentDate);
+    date.setDate(date.getDate() + 1);
+    return date;
+  }
+
+  const setItineraryDates = (fromDate: Date | undefined, toDate: Date | undefined) => {
+    if (!fromDate || !toDate) {
+      return [];
+    }
+    let currentDate: Date = fromDate;
+    let itinerary = [];
+    while (currentDate <= toDate) { 
+        itinerary.push(currentDate.toLocaleDateString());
+        currentDate = addDays(currentDate);
+    }
+    setItinerary(itinerary)
+    return itinerary;
+  }
+
   const getCostColorBG = (day: number) => {
     if (day%4 == 0) return 'var(--color-tropical-sunset-sorbet-Mist)';
     else if (day%4 == 1) return 'var(--color-tropical-palm-misty-palm)';
@@ -277,6 +312,7 @@ function App() {
                     onSelect={(selected) => {
                       if (selected) {
                         setRange({ from: selected.from, to: selected.to });
+                        setItineraryDates(selected.from , selected.to);
                       } else {
                         setRange({ from: undefined, to: undefined });
                       }
@@ -293,6 +329,15 @@ function App() {
               renderItem={(item) => (
                 <SortableList.Item id={item.id}>
                   <Flex direction="row" gap="1">
+                    {item.isStartSection === true ? (
+                      <div 
+                        key={item.date}
+                        ref={el => { scrollRefs.current[item.date.toString()] = el; }}
+                        className={"start-section-" + item.date.toString()}
+                      >
+                        {item.date}
+                      </div>
+                    ) : (null)}
                     <div>
                       <img className='bin' src={"./src/assets/bin.png"} onClick={() => removeItemById(item.id)}/>
                     </div>
@@ -369,7 +414,24 @@ function App() {
         </ScrollArea.Root>
       </Box>
       <Box className="NavSideBar">
-          Journi Web
+        <ScrollArea.Root className="ScrollAreaRoot">
+          <ScrollArea.Viewport ref={scroll2Ref}  className="ScrollAreaViewport">
+        <Flex direction="column" gap="2" className="NavSideBarContent">
+          <Text className="nav-title">
+            Itinerary
+          </Text>
+           {itinerary.map((date) =>
+              <Text className="itinerary-item" key={date.toString()} onClick={() => {
+                handleScrollTo(date.toString());}}>
+                {date}
+              </Text>
+           )}
+        </Flex>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical" >
+            <ScrollArea.Thumb className="ScrollAreaThumb" />
+          </ScrollArea.Scrollbar>
+        </ScrollArea.Root>
       </Box>
       </Flex>
     </>
