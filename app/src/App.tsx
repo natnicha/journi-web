@@ -306,7 +306,7 @@ function App() {
   return (
     <>
     <Flex direction="row" gap="1" style={{ height: "100vh", width: "100vw" }}>
-       <Grid columns="1" gap="0" rows="1" className="MapContainer">
+       <Box className="MapContainer">
         <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -321,7 +321,7 @@ function App() {
             </Marker>
           ))}
         </MapContainer>
-      </Grid>
+      </Box>
       <Box width="40vw" height="100vh" className="ItemContainer">
         <ScrollArea.Root className="ScrollAreaRoot">
           <ScrollArea.Viewport ref={itemContainerscrollRef}  className="ScrollAreaViewport">
