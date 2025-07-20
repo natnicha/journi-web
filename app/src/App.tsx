@@ -1,13 +1,10 @@
 import { useRef, useState } from 'react'
-import { Avatar, Flex, Text,Box, Badge, Skeleton, TextArea, Button } from '@radix-ui/themes';
+import { Avatar, Flex, Text,Box, Badge, Skeleton, TextArea } from '@radix-ui/themes';
 import type { LatLngExpression } from 'leaflet';
+import { TripDatePicker } from './TripDatePicker';
 import { SortableList } from './components';
 import { ScrollArea } from 'radix-ui';
-import { DayPicker } from 'react-day-picker';
-import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
-import { format } from 'date-fns';
-import { CalendarDays } from 'lucide-react';
-import type { PlaceInfo, Range } from './PlaceInfo';
+import type { PlaceInfo } from './PlaceInfo';
 import { MapContainerComponent } from './MapContainer';
 import { getMarkerSrc } from './Marker';
 import '@radix-ui/themes/styles.css';
@@ -104,8 +101,7 @@ function App() {
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
   ];
-  
-  const [range, setRange] = useState<Range>({ from: new Date(), to: new Date()});
+
   const [itinerary, setItinerary] = useState<String[]>(['7/1/2025', '7/2/2025', '7/3/2025', '7/4/2025', '7/5/2025']);
   const [selectedDate, setSelectedDate] = useState<string>('7/5/2025');
   const [items, setItems] = useState<PlaceInfo[]>(markers);
@@ -151,15 +147,6 @@ function App() {
     setItems(updatedItem);
   };
   
-  const formatRange = () => {
-    if (range.from && range.to) {
-      return `${format(range.from, 'PPP')} → ${format(range.to, 'PPP')}`;
-    } else if (range.from) {
-      return `${format(range.from, 'PPP')} → ...`;
-    }
-    return 'Pick a date range';
-  };
-  
   const handleScrollTo = (date: string) => {
     if (itemContainerscrollRef.current && daySectionScrollRefs.current[date]) {
       if (daySectionScrollRefs.current[date]) {
@@ -168,26 +155,6 @@ function App() {
       }
     }
   };
-
-  function addDays(currentDate: Date): Date { 
-    let date = new Date(currentDate);
-    date.setDate(date.getDate() + 1);
-    return date;
-  }
-
-  const setItineraryDates = (fromDate: Date | undefined, toDate: Date | undefined) => {
-    if (!fromDate || !toDate) {
-      return [];
-    }
-    let currentDate: Date = fromDate;
-    let itinerary = [];
-    while (currentDate <= toDate) { 
-        itinerary.push(currentDate.toLocaleDateString());
-        currentDate = addDays(currentDate);
-    }
-    setItinerary(itinerary)
-    return itinerary;
-  }
 
   const getCostColorBG = (day: number) => {
     if (day%4 == 0) return 'var(--color-tropical-sunset-sorbet-Mist)';
@@ -206,34 +173,8 @@ function App() {
       <Box width="40vw" height="100vh" className="item-container">
         <ScrollArea.Root className="ScrollAreaRoot">
           <ScrollArea.Viewport ref={itemContainerscrollRef}  className="ScrollAreaViewport">
-            
           <Flex direction="column" gap="2">
-            <div className='date-picker-panel'>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button className="date-picker-button" variant="solid" size="2" radius="large">
-                    <CalendarDays className="w-4 h-4" />
-                    {formatRange()}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="date-picker-content" side="top" align="start">
-                  <DayPicker
-                    mode="range"
-                    selected={range}
-                    onSelect={(selected) => {
-                      if (selected) {
-                        setRange({ from: selected.from, to: selected.to });
-                        setItineraryDates(selected.from , selected.to);
-                      } else {
-                        setRange({ from: undefined, to: undefined });
-                      }
-                    }}
-                    numberOfMonths={2}
-                    showOutsideDays
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
+            <TripDatePicker setItinerary={setItinerary} />
             <SortableList
               items={items}
               onChange={setItems}
