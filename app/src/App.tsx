@@ -155,7 +155,7 @@ function App() {
   const [selectedDate, setSelectedDate] = useState<string>('7/5/2025');
   const [items, setItems] = useState<PlaceInfo[]>(markers);
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const itemContainerscrollRef = useRef<HTMLDivElement | null>(null);
   const scroll2Ref = useRef<HTMLDivElement | null>(null);
   const daySectionScrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -183,8 +183,8 @@ function App() {
 
   // Auto-scroll to bottom when items change
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+    if (itemContainerscrollRef.current) {
+      itemContainerscrollRef.current.scrollTo({ top: itemContainerscrollRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [isAddNewItem]);
 
@@ -262,9 +262,9 @@ function App() {
 
   
   const handleScrollTo = (date: string) => {
-    if (scrollRef.current && daySectionScrollRefs.current[date]) {
+    if (itemContainerscrollRef.current && daySectionScrollRefs.current[date]) {
       if (daySectionScrollRefs.current[date]) {
-        scrollRef.current.scrollTo({ top: daySectionScrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
+        itemContainerscrollRef.current.scrollTo({ top: daySectionScrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
         setSelectedDate(date);
       }
     }
@@ -325,7 +325,7 @@ function App() {
       </Grid>
       <Box width="40vw" height="100vh" className="ItemContainer">
         <ScrollArea.Root className="ScrollAreaRoot">
-          <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
+          <ScrollArea.Viewport ref={itemContainerscrollRef}  className="ScrollAreaViewport">
             
           <Flex direction="column" gap="2">
             <div className='date-picker-panel'>
