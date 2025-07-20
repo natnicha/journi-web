@@ -156,7 +156,7 @@ function App() {
   const [items, setItems] = useState<PlaceInfo[]>(markers);
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   const itemContainerscrollRef = useRef<HTMLDivElement | null>(null);
-  const scroll2Ref = useRef<HTMLDivElement | null>(null);
+  const navSideBarScrollRef = useRef<HTMLDivElement | null>(null);
   const daySectionScrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const addNewPlace = (plc: any) => {
@@ -444,7 +444,7 @@ function App() {
       </Box>
       <Box className="NavSideBar">
         <ScrollArea.Root className="ScrollAreaRoot">
-          <ScrollArea.Viewport ref={scroll2Ref}  className="ScrollAreaViewport">
+          <ScrollArea.Viewport ref={navSideBarScrollRef}  className="ScrollAreaViewport">
         <Flex direction="column" gap="2" className="NavSideBarContent">
           <Text className="nav-title">
             Itinerary
