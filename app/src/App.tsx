@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react'
-import { Avatar, Flex, Text,Box, Badge, Skeleton, TextArea } from '@radix-ui/themes';
+import { Avatar, Flex, Text,Box, Badge, TextArea } from '@radix-ui/themes';
 import type { LatLngExpression } from 'leaflet';
-import { TripDatePicker } from './TripDatePicker';
-import { SortableList } from './components';
 import { ScrollArea } from 'radix-ui';
 import type { PlaceInfo } from './PlaceInfo';
+import { TripDatePicker } from './TripDatePicker';
+import { SortableList } from './components';
 import { MapContainerComponent } from './MapContainer';
+import { ItemContentSkeleton } from './ItemContentSkeleton';
 import { getMarkerSrc } from './Marker';
 import '@radix-ui/themes/styles.css';
 import 'react-day-picker/dist/style.css';
@@ -13,7 +14,6 @@ import 'leaflet/dist/leaflet.css';
 import './App.css'
 import './styles.css';
 import './LeafletNumberedMarkers.css'
-import { ItemContentSkeleton } from './ItemContentSkeleton';
 
 function getBadgeClassName(content: string) {
   if ((content.length)%5 == 0) return 'badge-mango';
