@@ -13,6 +13,7 @@ import 'leaflet/dist/leaflet.css';
 import './App.css'
 import './styles.css';
 import './LeafletNumberedMarkers.css'
+import { ItemContentSkeleton } from './ItemContentSkeleton';
 
 function getBadgeClassName(content: string) {
   if ((content.length)%5 == 0) return 'badge-mango';
@@ -201,29 +202,7 @@ function App() {
                     
                     <Flex direction="row" gap="1">
                     {item.title === "" ? (
-                    <Box className="item-content">
-                      <Text as="div" size="2" className="item-title">
-                        <Skeleton  className="item-title">
-                          Lorem ipsum dolor sit amet,<br/>
-                        </Skeleton>
-                      </Text>
-
-                      <Text as="div" size="2" className="item-detail">
-                        <Skeleton>
-                          consectetur adipiscing elit.<br/>
-                        </Skeleton>
-                      </Text>
-
-                      <Text as="div" size="1" className="item-address">
-                        <Skeleton className="item-address">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque felis 
-                          erat, fringilla sed commodo sed, aliquet nec magna.
-                        </Skeleton>
-                        </Text>
-                      <Skeleton>
-                        <TextArea className="user-notes" size="1" radius="large" placeholder="What to do, see, or things to avoid?…" />
-                      </Skeleton>
-                    </Box>
+                      <ItemContentSkeleton/>
                     ) : (
                     <Box className="item-content">
                       <Text as="div" className="item-title">
@@ -266,17 +245,17 @@ function App() {
       <Box className="nav-side-bar">
         <ScrollArea.Root className="ScrollAreaRoot">
           <ScrollArea.Viewport ref={navSideBarScrollRef}  className="ScrollAreaViewport">
-        <Flex direction="column" gap="2" className="NavSideBarContent">
-          <Text className="nav-title">
-            Itinerary
-          </Text>
-           {itinerary.map((date) =>
-              <Text className={date === selectedDate? ("itinerary-item-bold") : ("itinerary-item")} 
-              key={date.toString()} onClick={() => {handleScrollTo(date.toString());}}>
-                {date}
-              </Text>
-           )}
-        </Flex>
+          <Flex direction="column" gap="2" className="NavSideBarContent">
+            <Text className="nav-title">
+              Itinerary
+            </Text>
+            {itinerary.map((date) =>
+                <Text className={date === selectedDate? ("itinerary-item-bold") : ("itinerary-item")} 
+                key={date.toString()} onClick={() => {handleScrollTo(date.toString());}}>
+                  {date}
+                </Text>
+            )}
+          </Flex>
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical" >
             <ScrollArea.Thumb className="ScrollAreaThumb" />
