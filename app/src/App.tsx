@@ -151,8 +151,8 @@ function App() {
     },
   ];
   const [range, setRange] = useState<Range>({ from: new Date(), to: new Date()});
-  const [itinerary, setItinerary] = useState<String[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [itinerary, setItinerary] = useState<String[]>(['7/1/2025', '7/2/2025', '7/3/2025', '7/4/2025', '7/5/2025']);
+  const [selectedDate, setSelectedDate] = useState<string>('7/5/2025');
   const [items, setItems] = useState<PlaceInfo[]>(markers);
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
