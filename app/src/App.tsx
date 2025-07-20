@@ -181,6 +181,81 @@ function App() {
     return reordered;
   };
 
+  const formatNumber = (value: string) => {
+    const clean = value.replace(/,/g, "");
+    const num = Number(clean);
+    if (isNaN(num)) 
+      return "";
+    else 
+      return new Intl.NumberFormat("en-US").format(num);
+  };
+
+  const handleChange = (id: number, items: PlaceInfo[], value: string) => {
+    const updatedItem = items.map(item =>
+      item.id === id ? { ...item, cost: value.replace(/,/g, "") } : item
+    ) as PlaceInfo[];
+    setItems(updatedItem);
+  };
+
+  const handleBlur = (id: number, items: PlaceInfo[]) => {
+    const updatedItem = items.map(item =>
+      item.id === id ? { ...item, cost: formatNumber(String(item.cost)) } : item
+    ) as PlaceInfo[];
+    setItems(updatedItem);
+  };
+  
+  const formatRange = () => {
+    if (range.from && range.to) {
+      return `${format(range.from, 'PPP')} → ${format(range.to, 'PPP')}`;
+    } else if (range.from) {
+      return `${format(range.from, 'PPP')} → ...`;
+    }
+    return 'Pick a date range';
+  };
+  
+  const handleScrollTo = (date: string) => {
+    if (itemContainerscrollRef.current && daySectionScrollRefs.current[date]) {
+      if (daySectionScrollRefs.current[date]) {
+        itemContainerscrollRef.current.scrollTo({ top: daySectionScrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
+        setSelectedDate(date);
+      }
+    }
+  };
+
+  function addDays(currentDate: Date): Date { 
+    let date = new Date(currentDate);
+    date.setDate(date.getDate() + 1);
+    return date;
+  }
+
+  const setItineraryDates = (fromDate: Date | undefined, toDate: Date | undefined) => {
+    if (!fromDate || !toDate) {
+      return [];
+    }
+    let currentDate: Date = fromDate;
+    let itinerary = [];
+    while (currentDate <= toDate) { 
+        itinerary.push(currentDate.toLocaleDateString());
+        currentDate = addDays(currentDate);
+    }
+    setItinerary(itinerary)
+    return itinerary;
+  }
+
+  const getCostColorBG = (day: number) => {
+    if (day%4 == 0) return 'var(--color-tropical-sunset-sorbet-Mist)';
+    else if (day%4 == 1) return 'var(--color-tropical-palm-misty-palm)';
+    else if (day%4 == 2) return 'var(--color-tropical-lagoon-whisper)';
+    else return 'var(--color-tropical-mango-tin)';
+  };
+
+  const getMarkerSrc = (day: number) => {
+    if (day%4 == 0) return "./src/assets/map-pin-rose-sunset.png";
+    else if (day%4 == 1) return "./src/assets/map-pin.png";
+    else if (day%4 == 2) return "./src/assets/map-pin-lagoon-blue.png";
+    else return "./src/assets/map-pin-mango-deep.png";
+  };
+  
   // Auto-scroll to bottom when items change
   useEffect(() => {
     if (itemContainerscrollRef.current) {
@@ -227,82 +302,6 @@ function App() {
     fetchAllLocations();
     setIsAddNewItem(false);
   }, [isAddNewItem]);
-  
-  const formatNumber = (value: string) => {
-    const clean = value.replace(/,/g, "");
-    const num = Number(clean);
-    if (isNaN(num)) 
-      return "";
-    else 
-      return new Intl.NumberFormat("en-US").format(num);
-  };
-
-  const handleChange = (id: number, items: PlaceInfo[], value: string) => {
-    const updatedItem = items.map(item =>
-      item.id === id ? { ...item, cost: value.replace(/,/g, "") } : item
-    ) as PlaceInfo[];
-    setItems(updatedItem);
-  };
-
-  const handleBlur = (id: number, items: PlaceInfo[]) => {
-    const updatedItem = items.map(item =>
-      item.id === id ? { ...item, cost: formatNumber(String(item.cost)) } : item
-    ) as PlaceInfo[];
-    setItems(updatedItem);
-  };
-  
-  const formatRange = () => {
-    if (range.from && range.to) {
-      return `${format(range.from, 'PPP')} → ${format(range.to, 'PPP')}`;
-    } else if (range.from) {
-      return `${format(range.from, 'PPP')} → ...`;
-    }
-    return 'Pick a date range';
-  };
-
-  
-  const handleScrollTo = (date: string) => {
-    if (itemContainerscrollRef.current && daySectionScrollRefs.current[date]) {
-      if (daySectionScrollRefs.current[date]) {
-        itemContainerscrollRef.current.scrollTo({ top: daySectionScrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
-        setSelectedDate(date);
-      }
-    }
-  };
-
-  function addDays(currentDate: Date): Date { 
-    let date = new Date(currentDate);
-    date.setDate(date.getDate() + 1);
-    return date;
-  }
-
-  const setItineraryDates = (fromDate: Date | undefined, toDate: Date | undefined) => {
-    if (!fromDate || !toDate) {
-      return [];
-    }
-    let currentDate: Date = fromDate;
-    let itinerary = [];
-    while (currentDate <= toDate) { 
-        itinerary.push(currentDate.toLocaleDateString());
-        currentDate = addDays(currentDate);
-    }
-    setItinerary(itinerary)
-    return itinerary;
-  }
-
-  const getCostColorBG = (day: number) => {
-    if (day%4 == 0) return 'var(--color-tropical-sunset-sorbet-Mist)';
-    else if (day%4 == 1) return 'var(--color-tropical-palm-misty-palm)';
-    else if (day%4 == 2) return 'var(--color-tropical-lagoon-whisper)';
-    else return 'var(--color-tropical-mango-tin)';
-  };
-
-  const getMarkerSrc = (day: number) => {
-    if (day%4 == 0) return "./src/assets/map-pin-rose-sunset.png";
-    else if (day%4 == 1) return "./src/assets/map-pin.png";
-    else if (day%4 == 2) return "./src/assets/map-pin-lagoon-blue.png";
-    else return "./src/assets/map-pin-mango-deep.png";
-  };
   
   return (
     <>
