@@ -90,7 +90,7 @@ body {
 
 .item-content {
   justify-content: space-between;
-	width: 25vw;
+	width: 27vw;
   flex-direction: column;
   overflow: hidden;
 }
