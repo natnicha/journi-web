@@ -240,22 +240,25 @@ function App() {
   
   return (
     <>
-      <Grid columns="2" gap="0" rows="1" width="auto">
-          <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <ReverseGeocodeMarker addNewPlace={addNewPlace} />
-            {items.map(({ day, order, position, title, detail }) => (
-              <Marker key={day+","+order} position={position} icon={new NumberedDivIcon({number:order, iconUrl:getMarkerSrc(day)} as any)}>
-                <Popup> 
-                  {title} <br/> {detail} <br/>
-                </Popup> 
-              </Marker>
-            ))}
-          </MapContainer>
-          <ScrollArea.Root className="ScrollAreaRoot">
+    <Flex direction="row" gap="1" style={{ height: "100vh", width: "100vw" }}>
+       <Grid columns="1" gap="0" rows="1" className="MapContainer">
+        <MapContainer className="map" center={plc1} zoom={zoom_default} scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <ReverseGeocodeMarker addNewPlace={addNewPlace} />
+          {items.map(({ day, order, position, title, detail }) => (
+            <Marker key={day+","+order} position={position} icon={new NumberedDivIcon({number:order, iconUrl:getMarkerSrc(day)} as any)}>
+              <Popup> 
+                {title} <br/> {detail} <br/>
+              </Popup> 
+            </Marker>
+          ))}
+        </MapContainer>
+      </Grid>
+      <Box width="40vw" height="100vh" className="ItemContainer">
+        <ScrollArea.Root className="ScrollAreaRoot">
           <ScrollArea.Viewport ref={scrollRef}  className="ScrollAreaViewport">
             
           <Flex direction="column" gap="2">
@@ -356,15 +359,19 @@ function App() {
               )}
             />
           </Flex>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical" >
-          <ScrollArea.Thumb className="ScrollAreaThumb" />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal" >
-          <ScrollArea.Thumb className="ScrollAreaThumb" />
-        </ScrollArea.Scrollbar>
-      </ScrollArea.Root>
-      </Grid>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical" >
+            <ScrollArea.Thumb className="ScrollAreaThumb" />
+          </ScrollArea.Scrollbar>
+          <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal" >
+            <ScrollArea.Thumb className="ScrollAreaThumb" />
+          </ScrollArea.Scrollbar>
+        </ScrollArea.Root>
+      </Box>
+      <Box className="NavSideBar">
+          Journi Web
+      </Box>
+      </Flex>
     </>
   )
 }
