@@ -120,11 +120,15 @@ function App() {
       src: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq5c2znLp8Y7yfXYB-lTB2x2KRnXFcBKV8nmbEEDfPOQsYWYskOE6aWe287ZyI8T-YShGihssVCc_7BqzHto-eSPyfhox2WacVs1AhzNAyc1Rl5_brDKPw-_mEh7a6a60qgMXTa=w408-h544-k-no"
     },
   ];
+  const [range, setRange] = useState<Range>({ from: new Date(), to: new Date()});
+  const [itinerary, setItinerary] = useState<String[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>('');
   const [items, setItems] = useState<PlaceInfo[]>(markers);
+  const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const scroll2Ref = useRef<HTMLDivElement | null>(null);
-  const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
-  
+  const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   const addNewPlace = (plc: any) => {
     plc.id = items.length+1
     plc.order = items.length+1
@@ -217,8 +221,6 @@ function App() {
     setItems(updatedItem);
   };
   
-  const [range, setRange] = useState<Range>({ from: new Date(), to: new Date()});
-
   const formatRange = () => {
     if (range.from && range.to) {
       return `${format(range.from, 'PPP')} → ${format(range.to, 'PPP')}`;
@@ -228,13 +230,12 @@ function App() {
     return 'Pick a date range';
   };
 
-  const [itinerary, setItinerary] = useState<String[]>([]);
-  const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   
-  const handleScrollTo = (id: string) => {
-    if (scrollRef.current && scrollRefs.current[id]) {
-      if (scrollRefs.current[id]) {
-        scrollRef.current.scrollTo({ top: scrollRefs.current[id]!.offsetTop, behavior: 'smooth' });
+  const handleScrollTo = (date: string) => {
+    if (scrollRef.current && scrollRefs.current[date]) {
+      if (scrollRefs.current[date]) {
+        scrollRef.current.scrollTo({ top: scrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
+        setSelectedDate(date);
       }
     }
   };
@@ -334,9 +335,7 @@ function App() {
                         key={item.date}
                         ref={el => { scrollRefs.current[item.date.toString()] = el; }}
                         className={"start-section-" + item.date.toString()}
-                      >
-                        {item.date}
-                      </div>
+                      />
                     ) : (null)}
                     <div>
                       <img className='bin' src={"./src/assets/bin.png"} onClick={() => removeItemById(item.id)}/>
@@ -421,8 +420,8 @@ function App() {
             Itinerary
           </Text>
            {itinerary.map((date) =>
-              <Text className="itinerary-item" key={date.toString()} onClick={() => {
-                handleScrollTo(date.toString());}}>
+              <Text className={date === selectedDate? ("itinerary-item-bold") : ("itinerary-item")} 
+              key={date.toString()} onClick={() => {handleScrollTo(date.toString());}}>
                 {date}
               </Text>
            )}
