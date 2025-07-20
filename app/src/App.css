@@ -3,11 +3,13 @@
   text-align: center;
   height: '100vh',
 }
+
 body {
   overflow: hidden;
   margin: 0;
   height: '90vh',
 }
+
 :root {
   --color-tropical-mango-cream: #FFE5B4;
   --color-tropical-lagoon-mist: #B2EBF2;
@@ -181,21 +183,21 @@ body {
   --rdp-today-color: var(--color-tropical-palm-sea-forest);
 }
 
-.MapContainer {
+.map-container {
   position: absolute;
   left: 0; 
   width: 45vw;
   height: 100%;
 }
 
-.ItemContainer {
+.item-container {
   position: absolute;
   left: 45vw; 
   width: 45vw;
   height: 100%;
 }
 
-.NavSideBar {
+.nav-side-bar {
   position: absolute;
   left: 90vw; 
   width: 10vw;
@@ -209,13 +211,13 @@ body {
   background-color: var( --color-tropical-palm-misty-palm);
 }
 
-.itinerary-item{
+.itinerary-item {
   padding: 0.5rem;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.itinerary-item-bold{
+.itinerary-item-bold {
   padding: 0.5rem;
   border-radius: 5px;
   cursor: pointer;
