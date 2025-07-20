@@ -157,7 +157,7 @@ function App() {
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const scroll2Ref = useRef<HTMLDivElement | null>(null);
-  const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const daySectionScrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const addNewPlace = (plc: any) => {
     plc.id = items.length+1
@@ -262,9 +262,9 @@ function App() {
 
   
   const handleScrollTo = (date: string) => {
-    if (scrollRef.current && scrollRefs.current[date]) {
-      if (scrollRefs.current[date]) {
-        scrollRef.current.scrollTo({ top: scrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
+    if (scrollRef.current && daySectionScrollRefs.current[date]) {
+      if (daySectionScrollRefs.current[date]) {
+        scrollRef.current.scrollTo({ top: daySectionScrollRefs.current[date]!.offsetTop, behavior: 'smooth' });
         setSelectedDate(date);
       }
     }
@@ -363,7 +363,7 @@ function App() {
                     {item.isStartSection === true ? (
                       <div 
                         key={item.date}
-                        ref={el => { scrollRefs.current[item.date.toString()] = el; }}
+                        ref={el => { daySectionScrollRefs.current[item.date.toString()] = el; }}
                         className={"start-section-" + item.date.toString()}
                       />
                     ) : (null)}
