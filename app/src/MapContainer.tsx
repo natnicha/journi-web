@@ -47,9 +47,26 @@ export function MapContainerComponent ({ items, setItems, itemContainerscrollRef
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
 
   const addNewPlace = (plc: any) => {
-    plc.id = items.length + 1;
-    plc.order = items.length + 1;
-    setItems((prev) => [...prev, plc]);
+    let itemsInDay = items.filter(place => place.date === selectedDate)
+    plc.order = itemsInDay.length + 1;
+    plc.id = itemsInDay[itemsInDay.length-1].id + 1;
+    let index = itemsInDay[itemsInDay.length-1].id
+    const updatedItems = items.map((item) => {
+      return {
+        ...item,
+        id: item.id > index ? item.id + 1 : item.id,
+      };
+      });
+    console.log([
+        ...updatedItems.slice(0, index),
+        plc,
+        ...updatedItems.slice(index)
+    ])
+    setItems([
+        ...updatedItems.slice(0, index),
+        plc,
+        ...updatedItems.slice(index)
+    ])
     setIsAddNewItem(true);
   };
 
