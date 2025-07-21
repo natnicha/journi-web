@@ -10,20 +10,23 @@ interface MapContainerComponentProps {
   items: PlaceInfo[];
   setItems: React.Dispatch<React.SetStateAction<PlaceInfo[]>>;
   itemContainerscrollRef: React.RefObject<HTMLDivElement | null>;
+  selectedDate: string;
+  itinerary: String[];
 }
 
 const plc1: LatLngExpression = [13.754817011352124, 100.50415849532308]; //วัด​ราชนัดดา
 const zoom_default: number = 15
 
-function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceInfo) => void }) {
+function ReverseGeocodeMarker({ addNewPlace, selectedDate, itinerary, }: 
+  { addNewPlace: (location: PlaceInfo) => void; selectedDate: string; itinerary: String[]}) {
   useMapEvents({
     click: async (e) => {
       const { lat, lng } = e.latlng;
       try {
         const plc: LatLngExpression = [lat, lng];
         var place = {
-          day: 1,
-          date: new Date().toLocaleDateString(),
+          day: itinerary.findIndex(obj => obj === selectedDate) + 1,
+          date: selectedDate,
           id: 0,
           position: plc,
           title: "",
@@ -40,7 +43,7 @@ function ReverseGeocodeMarker({ addNewPlace }: { addNewPlace: (location: PlaceIn
   return null;
 }
 
-export function MapContainerComponent ({ items, setItems, itemContainerscrollRef }: MapContainerComponentProps) {
+export function MapContainerComponent ({ items, setItems, itemContainerscrollRef, selectedDate, itinerary }: MapContainerComponentProps) {
   const [isAddNewItem, setIsAddNewItem] = useState<boolean|false>(false);
 
   const addNewPlace = (plc: any) => {
@@ -104,7 +107,7 @@ export function MapContainerComponent ({ items, setItems, itemContainerscrollRef
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ReverseGeocodeMarker addNewPlace={addNewPlace} />
+        <ReverseGeocodeMarker addNewPlace={addNewPlace} selectedDate={selectedDate} itinerary={itinerary}/>
         {items.map(({ day, order, position, title, detail }) => (
           <Marker key={day + "," + order} position={position} icon={new NumberedDivIcon({ number: order, iconUrl: getMarkerSrc(day) } as any)}>
             <Popup>

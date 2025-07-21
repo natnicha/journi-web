@@ -169,7 +169,7 @@ function App() {
     <>
     <Flex direction="row" gap="1" style={{ height: "100vh", width: "100vw" }}>
        <Box className="map-container">
-        <MapContainerComponent items={items} setItems={setItems} itemContainerscrollRef={itemContainerscrollRef}/>
+        <MapContainerComponent items={items} setItems={setItems} itemContainerscrollRef={itemContainerscrollRef} selectedDate={selectedDate} itinerary={itinerary}/>
       </Box>
       <Box width="40vw" height="100vh" className="item-container">
         <ScrollArea.Root className="ScrollAreaRoot">
